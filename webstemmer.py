@@ -9,7 +9,7 @@ def webstemmer():
         analyse_pages(folder)
 
 def analyse_pages(folder_name):        
-    os.chdir('Webstemmer/webstemmer')
+    os.chdir('webstemmer/webstemmer')
 
     start_time = time.time()
 

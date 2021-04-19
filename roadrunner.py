@@ -20,7 +20,7 @@ def analyse_pages(folder_name):
     for page in pages:
         command += ' ' + page
 
-    os.chdir("RoadRunner")
+    os.chdir("roadrunner")
 
     start_time = time.time()
     subprocess.run(command, shell=True, check=True)

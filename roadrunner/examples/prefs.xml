@@ -1,0 +1,8 @@
+<preferences name="Default">
+    <backtracking value="false"/>
+    <ambiguity value="0"/>
+    <occurrences value="1"/>
+    <attributeValues value=""/>
+    <LLk value="1"/>
+    <RRk value="-1"/>
+</preferences>

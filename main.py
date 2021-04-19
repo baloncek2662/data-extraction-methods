@@ -8,7 +8,7 @@ from constants import FOLDER_NAMES
 
 def main():
     print('Scraping started')
-    # scrape()
+    scrape()
     print('Scraping finished\nRoadrunner started\n')
     rr_start = time.time()
     roadrunner()

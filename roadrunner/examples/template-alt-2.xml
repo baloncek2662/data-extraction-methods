@@ -1,8 +1,34 @@
-<preferences name="Default">
-    <backtracking value="false"/>
-    <ambiguity value="0"/>
-    <occurrences value="1"/>
-    <attributeValues value=""/>
-    <LLk value="1"/>
-    <RRk value="-1"/>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<preferences name="Hotjobs Preferences ">
+    <!-- tokenization -->
+    <skipTags value=""/>
+    <skipTrees value="script,style"/>
+    <skipAttributes value=""/>
+    <attributeValues value="id,class"/>
+    <freetext value="false"/>
+    <freetextTags value="a,font,b,i,span,sup"/>
+    <variantTags value="a,font,b,i,span,sup"/>
+    <keepTags value="false"/>
+    <!-- generation -->
+    <backtracking value="true"/>
+    <useHooks value="true"/>
+    <usePluses value="true"/>
+    <useSubtrees value="true"/> 
+    <step0 value="true"/>
+    <solutions value="5"/>
+    <occurrences value="4"/>
+    <collapsingbt value="false"/>
+    <ambiguity value="1"/>
+    <freePlus value="false"/>
+    <LLk value="5"/>
+    <RRk value="5"/>
+    <!-- labeling -->
+    <prefixLabelling value="true"/>
+    <trimLabels value="true"/>
+    <!-- output -->
+    <dataset_style value="roadrunner/marshall/style/data.xsl"/>
+    <index_style value="roadrunner/marshall/style/index.xsl"/>
+    <browser value="mozilla"/>
 </preferences>
+
