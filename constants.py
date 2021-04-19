@@ -56,6 +56,8 @@ FOLDER_NAMES = [
     'rtvslo',
     'slovenskenovice',
 ]
+
+
 URL_LISTS = [
     URLS_SD_UR,
     URLS_ZURNAL,
@@ -63,3 +65,9 @@ URL_LISTS = [
     URLS_RTVSLO,
     URLS_SLOVENSKE_NOVICE,
 ]
+
+import os
+SCRAPE_DEST_FOLDER = os.getenv('SCRAPE_DEST_FOLDER', '.')
+# add slash if not present
+if SCRAPE_DEST_FOLDER[-1] != '/':
+    SCRAPE_DEST_FOLDER += '/'

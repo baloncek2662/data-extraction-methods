@@ -1,15 +1,13 @@
-# =======================
-#
 # this file writes the HTML of selected 
 # pages into the specified folder
-#
-# =======================
+# modify constants.py to customize source pages
 
-from pathlib import Path
-from constants import URL_LISTS, FOLDER_NAMES
 import requests
 import shutil
 import os
+
+from pathlib import Path
+from constants import URL_LISTS, FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 def scrape():
     for i in range(len(URL_LISTS)):
@@ -22,11 +20,11 @@ def write_pages(pages, folder):
     for page in pages:
         page.encoding = 'utf-8'
 
-    remove_path = Path('examples/' + folder)
+    remove_path = Path(SCRAPE_DEST_FOLDER + folder)
     if remove_path.exists() and remove_path.is_dir():
         shutil.rmtree(remove_path)
 
-    path = 'examples/' + folder + '/' + folder + '/'
+    path = SCRAPE_DEST_FOLDER + folder + '/' + folder + '/'
     Path(path).mkdir(parents=True, exist_ok=True) # creates directory
     
     for i in range(len(pages)):
@@ -36,9 +34,10 @@ def write_pages(pages, folder):
             file.write(pages[i].text)
 
     # creates zip, needed by webstemmer
-    os.chdir('examples')
+    cwd = os.getcwd()
+    os.chdir(SCRAPE_DEST_FOLDER)
     shutil.make_archive(folder, 'zip', folder)
-    os.chdir('..')
+    os.chdir(cwd)
 
 
 def get_url_responses(url_list):
@@ -47,26 +46,3 @@ def get_url_responses(url_list):
         result.append(requests.get(url))
     return result
 
-# def get_body(page):
-#     result = page.text
-#     # result = result.split('</head>')[1]
-#     # print(len(result.split('</head>')))
-#     return result
-
-# def get_sd_ur_responses():
-#     result = []
-#     for url in URLS_SD_UR:
-#         result.append(requests.get(url))
-#     return result
-
-# def get_zurnal_responses():
-#     result = []
-#     for url in URLS_ZURNAL:
-#         result.append(requests.get(url))
-#     return result
-
-# def get_delo_responses():
-#     result = []
-#     for url in URLS_DELO:
-#         result.append(requests.get(url))
-#     return result

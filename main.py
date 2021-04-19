@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
+import time
+
 from scraper import scrape
 from roadrunner import roadrunner
 from webstemmer import webstemmer
-import time
 from constants import FOLDER_NAMES
 
 def main():

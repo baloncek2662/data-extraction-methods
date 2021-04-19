@@ -2,7 +2,7 @@ import os
 import subprocess
 import time
 
-from constants import FOLDER_NAMES
+from constants import FOLDER_NAMES,SCRAPE_DEST_FOLDER
 
 def webstemmer():
     for folder in FOLDER_NAMES:
@@ -17,7 +17,7 @@ def analyse_pages(folder_name):
     # options
     analyse_command += ' -t 0.5 -S 1' 
     # html src
-    analyse_command += ' ../../examples/' + folder_name + '.zip' 
+    analyse_command += ' ' + SCRAPE_DEST_FOLDER + folder_name + '.zip' 
     # layout pattern destination file
     analyse_command += ' > ' + folder_name + '.pat' 
     subprocess.run(analyse_command, shell=True, check=True)
@@ -26,7 +26,7 @@ def analyse_pages(folder_name):
     # options
     extract_command += ' -t 0.5 -T 0.7 -M 20'
     # layout analysis file and html source
-    extract_command += ' ' + folder_name + '.pat ../../examples/' + folder_name + '.zip'
+    extract_command += ' ' + folder_name + '.pat ' + SCRAPE_DEST_FOLDER + folder_name + '.zip'
     # results destination file
     extract_command += ' > ' + folder_name + '.txt'
     subprocess.run(extract_command, shell=True, check=True)

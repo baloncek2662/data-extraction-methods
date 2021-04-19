@@ -3,7 +3,7 @@ import os
 import glob
 import time
 
-from constants import FOLDER_NAMES
+from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 def roadrunner():
     for folder in FOLDER_NAMES:
@@ -14,9 +14,7 @@ def analyse_pages(folder_name):
     command += ' -N' + folder_name # output folder
     command += ' -Oexamples/prefs.xml' # preferences to be used
 
-    # we have to work with absolute paths, because roadrunner runs in another folder
-    examples_src_folder = os.getenv('RR_SRC_FOLDER', '.')
-    pages = glob.glob(examples_src_folder + folder_name + '/' + folder_name + '/*')    
+    pages = glob.glob(SCRAPE_DEST_FOLDER + folder_name + '/' + folder_name + '/*')    
     for page in pages:
         command += ' ' + page
 
