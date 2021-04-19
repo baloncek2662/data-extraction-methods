@@ -1,0 +1,4 @@
+roadrunner/output/
+webstemmer/webstemmer/*.pat
+webstemmer/webstemmer/*.txt
+.env
