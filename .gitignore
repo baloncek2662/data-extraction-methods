@@ -4,3 +4,4 @@ webstemmer/webstemmer/*.txt
 .env
 __pycache__/
 examples/*
+scrapynews/scraped-content/*.json
