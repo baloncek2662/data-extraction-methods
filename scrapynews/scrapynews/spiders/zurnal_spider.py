@@ -1,15 +1,19 @@
 import scrapy
+from .root_spider import RootSpider
 
 SPIDER_NAME = 'zurnal'
 
-class ZurnalSpider(scrapy.Spider):
+class ZurnalSpider(scrapy.Spider, RootSpider):
     name = SPIDER_NAME
-    save_files=False
+    
+    def initialize(self):
+        self.save_files = False
+        if getattr(self, 'save-files', None) == 'True':
+            self.save_files = True
+        self.xpath_expression = '//span[has-class("card__title_highlight")]/text()'
 
     def start_requests(self):
-        save_files_attr = getattr(self, 'save-files', None)
-        if save_files_attr == 'True':
-            self.save_files = True
+        self.initialize()
             
         # TODO import from ../../../constants.py - URLS_ZURNAL
         urls = [
@@ -35,15 +39,4 @@ class ZurnalSpider(scrapy.Spider):
 
 
     def get_all_titles(self, response):
-        article_titles = response.xpath('//span[has-class("card__title_highlight")]/text()').getall()
-        return self.get_trimmed_list(article_titles)
-
-    def get_trimmed_list(self, l):
-        result = []
-        for el in l:
-            el = el.replace('\n', '')
-            el = el.strip()
-            if el != '':
-                result.append(el)
-
-        return result
+        return super().get_all_titles(response)

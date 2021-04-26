@@ -1,16 +1,22 @@
 import scrapy
+from .root_spider import RootSpider
 
 SPIDER_NAME = 'delo'
 
-class DeloSpider(scrapy.Spider):
+class DeloSpider(scrapy.Spider, RootSpider):
     name = SPIDER_NAME
-    save_files=False
 
-    def start_requests(self):
-        save_files_attr = getattr(self, 'save-files', None)
-        if save_files_attr == 'True':
+    def initialize(self):
+        self.save_files = False
+        if getattr(self, 'save-files', None) == 'True':
             self.save_files = True
-            
+        self.xpath_expression = '//span[has-class("article_teaser__title_text")]/text()'
+
+    # scrapy's built in __init__ does not accept self.save_files, self.xpath_expression
+    # LOG: builtins.TypeError: __init__() got an unexpected keyword argument 'save-files'
+    def start_requests(self):
+        self.initialize()
+
         # TODO import from ../../../constants.py - URLS_DELO
         urls = [
             'https://www.delo.si/novice/',
@@ -37,19 +43,13 @@ class DeloSpider(scrapy.Spider):
         #article_data_list = self.get_article_data_list(response)
 
     def get_all_titles(self, response):
-        article_titles = response.xpath('//span[has-class("article_teaser__title_text")]/text()').getall()
-        return self.get_trimmed_list(article_titles)
+        return super().get_all_titles(response)
 
-    def get_trimmed_list(self, l):
-        result = []
-        for el in l:
-            el = el.replace('\n', '')
-            el = el.strip()
-            if el != '':
-                result.append(el)
 
-        return result
 
+
+
+        
     # NOT IN USE - needs to scrape from different urls (www.delo.si)
     def get_article_data_list(self, response):
         title = response.xpath('//h1[has-class("article__title")]/text()').get()

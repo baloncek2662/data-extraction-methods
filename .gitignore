@@ -4,5 +4,5 @@ webstemmer/webstemmer/*.txt
 .env
 __pycache__/
 examples/*
-scrapynews/scraped-content/*.json
-scraped-folders/*.html
+scrapynews/scraped-content/*
+scraped-folders/
