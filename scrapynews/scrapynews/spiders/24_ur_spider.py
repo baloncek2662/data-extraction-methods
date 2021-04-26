@@ -1,9 +1,9 @@
 import scrapy
 
-spider_name = '24ur'
+SPIDER_NAME = '24ur'
 
 class Spider24ur(scrapy.Spider):
-    name = spider_name
+    name = SPIDER_NAME
     save_files=False
 
     def start_requests(self):
@@ -14,10 +14,10 @@ class Spider24ur(scrapy.Spider):
         # TODO import from ../../../constants.py - URLS_24_UR
         urls = [
             'https://www.24ur.com/',
-            'https://www.24ur.com/novice',
-            'https://www.24ur.com/sport',
-            'https://www.24ur.com/popin',
-            'https://www.24ur.com/tv-oddaje',
+            'https://www.24ur.com/novice/',
+            'https://www.24ur.com/sport/',
+            'https://www.24ur.com/popin/',
+            'https://www.24ur.com/tv-oddaje/',
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -25,7 +25,7 @@ class Spider24ur(scrapy.Spider):
     def parse(self, response):
         if self.save_files:
             article = response.url.split("/")[-2]
-            filename = f'./scraped-content/{spider_name}-{article}.html'
+            filename = f'./scraped-content/{SPIDER_NAME}-{article}.html'
             with open(filename, 'wb') as f:
                 f.write(response.body)
 
@@ -48,8 +48,3 @@ class Spider24ur(scrapy.Spider):
                 result.append(el)
 
         return result
-
-        #<h1 class="card-overlay__title card-overlay__title--large">Mavericksi so h Kingsom prišli po povračilo</h1>
-        #<h1 class="card-overlay__title">Lazio ugnal Milan na derbiju, Napoli prehitel Juventus</h1>
-        #<h2 class="card__title card__title--small"><span class="card__title-inside">City pred osem tisoč navijači do zmage v ligaškem pokalu, le točka Uniteda v ...</span></h2>
-        #<span class="card__title-inside">Zidane: Dovolj je vprašanj o Superligi, zanimata me le Liga prvakov in Chelsea</span>

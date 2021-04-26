@@ -13,11 +13,11 @@ class RtvSpider(scrapy.Spider):
             
         # TODO import from ../../../constants.py - URLS_RTVSLO
         urls = [
-            'https://www.rtvslo.si/slovenija',
-            'https://www.rtvslo.si/svet',
-            'https://www.rtvslo.si/sport',
-            'https://www.rtvslo.si/kultura',
-            'https://www.rtvslo.si/svet-zabave',
+            'https://www.rtvslo.si/slovenija/',
+            'https://www.rtvslo.si/svet/',
+            'https://www.rtvslo.si/sport/',
+            'https://www.rtvslo.si/kultura/',
+            'https://www.rtvslo.si/svet-zabave/',
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)

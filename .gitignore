@@ -5,3 +5,4 @@ webstemmer/webstemmer/*.txt
 __pycache__/
 examples/*
 scrapynews/scraped-content/*.json
+scraped-folders/*.html

@@ -1,9 +1,9 @@
 import scrapy
 
-spider_name = 'delo'
+SPIDER_NAME = 'delo'
 
 class DeloSpider(scrapy.Spider):
-    name = spider_name
+    name = SPIDER_NAME
     save_files=False
 
     def start_requests(self):
@@ -13,11 +13,11 @@ class DeloSpider(scrapy.Spider):
             
         # TODO import from ../../../constants.py - URLS_DELO
         urls = [
-            'https://www.delo.si/novice',
-            'https://www.delo.si/gospodarstvo',
-            'https://www.delo.si/lokalno',
-            'https://www.delo.si/mnenja',
-            'https://www.delo.si/sport',
+            'https://www.delo.si/novice/',
+            'https://www.delo.si/gospodarstvo/',
+            'https://www.delo.si/lokalno/',
+            'https://www.delo.si/mnenja/',
+            'https://www.delo.si/sport/',
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -25,7 +25,7 @@ class DeloSpider(scrapy.Spider):
     def parse(self, response):
         if self.save_files:
             article = response.url.split("/")[-2]
-            filename = f'./scraped-content/{spider_name}-{article}.html'
+            filename = f'./scraped-content/{SPIDER_NAME}-{article}.html'
             with open(filename, 'wb') as f:
                 f.write(response.body)
 

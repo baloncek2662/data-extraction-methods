@@ -6,46 +6,46 @@
 # 24ur
 URLS_24_UR = [
     'https://www.24ur.com/',
-    'https://www.24ur.com/novice',
-    'https://www.24ur.com/sport',
-    'https://www.24ur.com/popin',
-    'https://www.24ur.com/tv-oddaje',
+    'https://www.24ur.com/novice/',
+    'https://www.24ur.com/sport/',
+    'https://www.24ur.com/popin/',
+    'https://www.24ur.com/tv-oddaje/',
 ]
 
 # zurnal
 URLS_ZURNAL = [
     'https://www.zurnal24.si/',
-    'https://www.zurnal24.si/slovenija',
-    'https://www.zurnal24.si/svet',
-    'https://www.zurnal24.si/sport',
-    'https://www.zurnal24.si/magazin',
+    'https://www.zurnal24.si/slovenija/',
+    'https://www.zurnal24.si/svet/',
+    'https://www.zurnal24.si/sport/',
+    'https://www.zurnal24.si/magazin/',
 ]
 
 # delo
 URLS_DELO = [
-    'https://www.delo.si/novice',
-    'https://www.delo.si/gospodarstvo',
-    'https://www.delo.si/lokalno',
-    'https://www.delo.si/mnenja',
-    'https://www.delo.si/sport',
+    'https://www.delo.si/novice/',
+    'https://www.delo.si/gospodarstvo/',
+    'https://www.delo.si/lokalno/',
+    'https://www.delo.si/mnenja/',
+    'https://www.delo.si/sport/',
 ]
 
 # rtvslo
 URLS_RTVSLO = [
-    'https://www.rtvslo.si/slovenija',
-    'https://www.rtvslo.si/svet',
-    'https://www.rtvslo.si/sport',
-    'https://www.rtvslo.si/kultura',
-    'https://www.rtvslo.si/svet-zabave',
+    'https://www.rtvslo.si/slovenija/',
+    'https://www.rtvslo.si/svet/',
+    'https://www.rtvslo.si/sport/',
+    'https://www.rtvslo.si/kultura/',
+    'https://www.rtvslo.si/svet-zabave/',
 ]
 
 # slovenskenovice
 URLS_SLOVENSKE_NOVICE = [
     'https://www.slovenskenovice.si/',
-    'https://www.slovenskenovice.si/sport',
-    'https://www.slovenskenovice.si/bralci',
-    'https://www.slovenskenovice.si/kronika',
-    'https://www.slovenskenovice.si/stil',
+    'https://www.slovenskenovice.si/sport/',
+    'https://www.slovenskenovice.si/bralci/',
+    'https://www.slovenskenovice.si/kronika/',
+    'https://www.slovenskenovice.si/stil/',
 ]
 
 

@@ -1,9 +1,9 @@
 import scrapy
 
-spider_name = 'zurnal'
+SPIDER_NAME = 'zurnal'
 
 class ZurnalSpider(scrapy.Spider):
-    name = spider_name
+    name = SPIDER_NAME
     save_files=False
 
     def start_requests(self):
@@ -14,10 +14,10 @@ class ZurnalSpider(scrapy.Spider):
         # TODO import from ../../../constants.py - URLS_ZURNAL
         urls = [
             'https://www.zurnal24.si/',
-            'https://www.zurnal24.si/slovenija',
-            'https://www.zurnal24.si/svet',
-            'https://www.zurnal24.si/sport',
-            'https://www.zurnal24.si/magazin',
+            'https://www.zurnal24.si/slovenija/',
+            'https://www.zurnal24.si/svet/',
+            'https://www.zurnal24.si/sport/',
+            'https://www.zurnal24.si/magazin/',
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -25,7 +25,7 @@ class ZurnalSpider(scrapy.Spider):
     def parse(self, response):
         if self.save_files:
             article = response.url.split("/")[-2]
-            filename = f'./scraped-content/{spider_name}-{article}.html'
+            filename = f'./scraped-content/{SPIDER_NAME}-{article}.html'
             with open(filename, 'wb') as f:
                 f.write(response.body)
 

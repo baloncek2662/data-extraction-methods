@@ -1,9 +1,9 @@
 import scrapy
 
-spider_name = 'slovenske-novice'
+SPIDER_NAME = 'slovenske-novice'
 
 class SloNoviceSpider(scrapy.Spider):
-    name = spider_name
+    name = SPIDER_NAME
     save_files=False
 
     def start_requests(self):
@@ -14,10 +14,10 @@ class SloNoviceSpider(scrapy.Spider):
         # TODO import from ../../../constants.py - URLS_SLOVENSKE_NOVICE
         urls = [
             'https://www.slovenskenovice.si/',
-            'https://www.slovenskenovice.si/sport',
-            'https://www.slovenskenovice.si/bralci',
-            'https://www.slovenskenovice.si/kronika',
-            'https://www.slovenskenovice.si/stil',
+            'https://www.slovenskenovice.si/sport/',
+            'https://www.slovenskenovice.si/bralci/',
+            'https://www.slovenskenovice.si/kronika/',
+            'https://www.slovenskenovice.si/stil/',
         ]
         for url in urls:
             yield scrapy.Request(url=url, callback=self.parse)
@@ -25,7 +25,7 @@ class SloNoviceSpider(scrapy.Spider):
     def parse(self, response):
         if self.save_files:
             article = response.url.split("/")[-2]
-            filename = f'./scraped-content/{spider_name}-{article}.html'
+            filename = f'./scraped-content/{SPIDER_NAME}-{article}.html'
             with open(filename, 'wb') as f:
                 f.write(response.body)
 
