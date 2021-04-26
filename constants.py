@@ -4,7 +4,7 @@
 
 
 # 24ur
-URLS_SD_UR = [
+URLS_24_UR = [
     'https://www.24ur.com/',
     'https://www.24ur.com/novice',
     'https://www.24ur.com/sport',
@@ -59,7 +59,7 @@ FOLDER_NAMES = [
 
 
 URL_LISTS = [
-    URLS_SD_UR,
+    URLS_24_UR,
     URLS_ZURNAL,
     URLS_DELO,
     URLS_RTVSLO,
