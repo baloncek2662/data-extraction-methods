@@ -35,9 +35,15 @@ class ZurnalSpider(scrapy.Spider):
 
 
     def get_all_titles(self, response):
-        article_titles = response.xpath('//span[has-class("article_teaser__title_text")]/text()').getall()
-        for i in range(len(article_titles)):
-            article_titles[i] = article_titles[i].replace('\n', '')
-            article_titles[i] = article_titles[i].strip()
-        return article_titles
+        article_titles = response.xpath('//span[has-class("card__title_highlight")]/text()').getall()
+        return self.get_trimmed_list(article_titles)
 
+    def get_trimmed_list(self, l):
+        result = []
+        for el in l:
+            el = el.replace('\n', '')
+            el = el.strip()
+            if el != '':
+                result.append(el)
+
+        return result
