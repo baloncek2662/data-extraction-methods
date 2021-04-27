@@ -1,7 +1,7 @@
 import scrapy
 from .root_spider import RootSpider
 
-SPIDER_NAME = 'slovenske-novice'
+SPIDER_NAME = 'slovenskenovice'
 
 class SloNoviceSpider(scrapy.Spider, RootSpider):
     name = SPIDER_NAME

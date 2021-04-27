@@ -13,13 +13,13 @@ from compare_results import compare
 
 def main():
     print('Scraping started')
-    scrape()
+    # scrape()
     print('Scraping finished\nRoadrunner started\n')
     start = time.time()
-    roadrunner()
+    # roadrunner()
     rr_end = time.time()
     print('Roadrunner finished\nWebstemmer started\n')
-    webstemmer()
+    # webstemmer()
     ws_end = time.time()
     print('\nWebstemmer finished\n\n')
     scrapy()
