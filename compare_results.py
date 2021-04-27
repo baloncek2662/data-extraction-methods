@@ -8,6 +8,8 @@ from constants import FOLDER_NAMES
 def compare():
     webstemmer_titles = get_webstemmer_titles()
     scrapy_titles = get_scrapy_titles()
+    print(scrapy_titles)
+    print(webstemmer_titles)
 
 def get_webstemmer_titles():
     result = []
@@ -18,12 +20,15 @@ def get_webstemmer_titles():
                 if line[:-1] != '':
                     webpage_titles.append(line[:-1])
         result.append({webpage : webpage_titles})
-        
+
     return result
 
 def get_scrapy_titles():
-    result = {}
-    with open('./scrapynews/scraped-content/rtv.json', 'r') as file:
-        result = json.load(file)
+    result = []
+    for webpage in FOLDER_NAMES:
+        webpage_titles = []
+        with open(f'./scrapynews/scraped-content/{webpage}.json', 'r') as file:
+            webpage_titles = json.load(file)
+        result.append({webpage : webpage_titles})
 
     return result

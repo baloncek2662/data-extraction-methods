@@ -1,7 +1,7 @@
 import scrapy
 from .root_spider import RootSpider
 
-spider_name = 'rtv'
+spider_name = 'rtvslo'
 
 class RtvSpider(scrapy.Spider, RootSpider):
     name = spider_name
