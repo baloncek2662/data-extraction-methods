@@ -2,25 +2,32 @@
 
 import time
 
+
 from scraper import scrape
 from roadrunner import roadrunner
 from webstemmer import webstemmer
+from scrapy import scrapy
 from constants import FOLDER_NAMES
 
 def main():
     print('Scraping started')
     scrape()
     print('Scraping finished\nRoadrunner started\n')
-    rr_start = time.time()
+    start = time.time()
     roadrunner()
     rr_end = time.time()
     print('Roadrunner finished\nWebstemmer started\n')
     webstemmer()
     ws_end = time.time()
     print('\nWebstemmer finished\n\n')
+    scrapy()
+    scrapy_end = time.time()
+    print('\nScrapy finished\n\n')
 
-    print('Execution time:\nRoadRunner average time per webpage: {0}s\nWebstemmer average time per webpage: {1}\n'
-    .format((rr_end-rr_start)/len(FOLDER_NAMES), (ws_end-rr_end)/len(FOLDER_NAMES)))
+    print('Execution times:')
+    print(f'RoadRunner average time per webpage: {(rr_end-start)/len(FOLDER_NAMES)}s')
+    print(f'Webstemmer average time per webpage: {(ws_end-rr_end)/len(FOLDER_NAMES)}s')
+    print(f'Scrapy average time per webpage: {(scrapy_end-ws_end)/len(FOLDER_NAMES)}s')
     
 if __name__ == "__main__":
     main()
