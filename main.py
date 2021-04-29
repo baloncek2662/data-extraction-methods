@@ -6,7 +6,7 @@ import time
 from scraper import scrape
 from roadrunner import roadrunner
 from webstemmer import webstemmer
-from scrapy import scrapy
+from scrapy_runner import scrapy
 from constants import FOLDER_NAMES
 from compare_results import compare
 

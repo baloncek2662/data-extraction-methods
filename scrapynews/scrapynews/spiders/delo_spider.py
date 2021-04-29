@@ -1,5 +1,6 @@
 import scrapy
 from .root_spider import RootSpider
+from constants import URLS_24_UR
 
 SPIDER_NAME = 'delo'
 
@@ -17,15 +18,7 @@ class DeloSpider(scrapy.Spider, RootSpider):
     def start_requests(self):
         self.initialize()
 
-        # TODO import from ../../../constants.py - URLS_DELO
-        urls = [
-            'https://www.delo.si/novice/',
-            'https://www.delo.si/gospodarstvo/',
-            'https://www.delo.si/lokalno/',
-            'https://www.delo.si/mnenja/',
-            'https://www.delo.si/sport/',
-        ]
-        for url in urls:
+        for url in URLS_24_UR:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
