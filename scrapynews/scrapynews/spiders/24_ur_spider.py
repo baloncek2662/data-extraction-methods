@@ -1,5 +1,7 @@
 import scrapy
 from .root_spider import RootSpider
+from constants import URLS_24_UR
+
 
 SPIDER_NAME = '24ur'
 
@@ -15,15 +17,7 @@ class Spider24ur(scrapy.Spider, RootSpider):
     def start_requests(self):
         self.initialize()
             
-        # TODO import from ../../../constants.py - URLS_24_UR
-        urls = [
-            'https://www.24ur.com/',
-            'https://www.24ur.com/novice/',
-            'https://www.24ur.com/sport/',
-            'https://www.24ur.com/popin/',
-            'https://www.24ur.com/tv-oddaje/',
-        ]
-        for url in urls:
+        for url in URLS_24_UR:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):

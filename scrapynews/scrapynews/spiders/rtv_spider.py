@@ -1,5 +1,6 @@
 import scrapy
 from .root_spider import RootSpider
+from constants import URLS_RTVSLO
 
 spider_name = 'rtvslo'
 
@@ -15,15 +16,7 @@ class RtvSpider(scrapy.Spider, RootSpider):
     def start_requests(self):
         self.initialize()
             
-        # TODO import from ../../../constants.py - URLS_RTVSLO
-        urls = [
-            'https://www.rtvslo.si/slovenija/',
-            'https://www.rtvslo.si/svet/',
-            'https://www.rtvslo.si/sport/',
-            'https://www.rtvslo.si/kultura/',
-            'https://www.rtvslo.si/svet-zabave/',
-        ]
-        for url in urls:
+        for url in URLS_RTVSLO:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):

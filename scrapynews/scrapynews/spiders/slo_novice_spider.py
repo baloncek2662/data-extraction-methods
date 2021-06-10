@@ -1,5 +1,6 @@
 import scrapy
 from .root_spider import RootSpider
+from constants import URLS_SLOVENSKE_NOVICE
 
 SPIDER_NAME = 'slovenskenovice'
 
@@ -15,15 +16,7 @@ class SloNoviceSpider(scrapy.Spider, RootSpider):
     def start_requests(self):
         self.initialize()
             
-        # TODO import from ../../../constants.py - URLS_SLOVENSKE_NOVICE
-        urls = [
-            'https://www.slovenskenovice.si/',
-            'https://www.slovenskenovice.si/sport/',
-            'https://www.slovenskenovice.si/bralci/',
-            'https://www.slovenskenovice.si/kronika/',
-            'https://www.slovenskenovice.si/stil/',
-        ]
-        for url in urls:
+        for url in URLS_SLOVENSKE_NOVICE:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):

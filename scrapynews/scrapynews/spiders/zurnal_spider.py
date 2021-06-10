@@ -1,5 +1,7 @@
 import scrapy
 from .root_spider import RootSpider
+from constants import URLS_ZURNAL
+
 
 SPIDER_NAME = 'zurnal'
 
@@ -14,16 +16,8 @@ class ZurnalSpider(scrapy.Spider, RootSpider):
 
     def start_requests(self):
         self.initialize()
-            
-        # TODO import from ../../../constants.py - URLS_ZURNAL
-        urls = [
-            'https://www.zurnal24.si/',
-            'https://www.zurnal24.si/slovenija/',
-            'https://www.zurnal24.si/svet/',
-            'https://www.zurnal24.si/sport/',
-            'https://www.zurnal24.si/magazin/',
-        ]
-        for url in urls:
+         
+        for url in URLS_ZURNAL:
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
