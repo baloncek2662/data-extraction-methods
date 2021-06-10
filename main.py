@@ -13,13 +13,13 @@ from compare_results import compare
 
 def main():
     print('Scraping started')
-    # scrape()
+    scrape()
     print('Scraping finished\nRoadrunner started\n')
     start = time.time()
-    # roadrunner()
+    roadrunner()
     rr_end = time.time()
     print('Roadrunner finished\nWebstemmer started\n')
-    # webstemmer()
+    webstemmer()
     ws_end = time.time()
     print('\nWebstemmer finished\n\n')
     scrapy()
@@ -30,6 +30,7 @@ def main():
     print(f'RoadRunner average time per webpage: {(rr_end-start)/len(FOLDER_NAMES)}s')
     print(f'Webstemmer average time per webpage: {(ws_end-rr_end)/len(FOLDER_NAMES)}s')
     print(f'Scrapy average time per webpage: {(scrapy_end-ws_end)/len(FOLDER_NAMES)}s')
+    print()
 
     compare()
     
