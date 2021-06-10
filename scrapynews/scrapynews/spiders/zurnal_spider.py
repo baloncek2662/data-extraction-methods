@@ -29,7 +29,7 @@ class ZurnalSpider(scrapy.Spider, RootSpider):
 
         
         article_titles = self.get_all_titles(response)
-        yield {'titles' : article_titles}
+        yield {SPIDER_NAME : article_titles}
 
 
     def get_all_titles(self, response):

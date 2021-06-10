@@ -11,7 +11,19 @@ def compare():
     print(scrapy_titles)
     print(webstemmer_titles)
 
+def get_roadrunner_titles():
+    '''
+    Result format:
+    '''
+
 def get_webstemmer_titles():
+    '''
+    Result format:
+    [
+        {'24ur': [...DATA...]},
+        
+    ]
+    '''
     result = []
     for webpage in FOLDER_NAMES:
         webpage_titles = []
@@ -24,11 +36,27 @@ def get_webstemmer_titles():
     return result
 
 def get_scrapy_titles():
+    '''
+    Result format:
+    [
+        {'24ur': [...DATA...]},
+        
+    ]
+    '''
     result = []
     for webpage in FOLDER_NAMES:
-        webpage_titles = []
+        webpage_titles = {}
         with open(f'./scrapynews/scraped-content/{webpage}.json', 'r') as file:
             webpage_titles = json.load(file)
-        result.append({webpage : webpage_titles})
+        # webpage_titles is an array of 5 objects: {'webpage': [...DATA...]}
+        # we need to combine them into a single object: {'webpage': [...DATA...]},
+        titles_list = []
+        for section in webpage_titles:
+            section_titles_list = section[webpage]
+            titles_list.extend(section_titles_list)
 
+        result.append({webpage : titles_list})
+
+
+    
     return result

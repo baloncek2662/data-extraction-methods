@@ -30,7 +30,7 @@ class DeloSpider(scrapy.Spider, RootSpider):
 
         
         article_titles = self.get_all_titles(response)
-        yield {'titles' : article_titles}
+        yield {SPIDER_NAME : article_titles}
 
         # NOT IN USE - use when urls are specific articles
         #article_data_list = self.get_article_data_list(response)

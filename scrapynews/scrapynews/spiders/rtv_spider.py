@@ -2,10 +2,10 @@ import scrapy
 from .root_spider import RootSpider
 from constants import URLS_RTVSLO
 
-spider_name = 'rtvslo'
+SPIDER_NAME = 'rtvslo'
 
 class RtvSpider(scrapy.Spider, RootSpider):
-    name = spider_name
+    name = SPIDER_NAME
 
     def initialize(self):
         self.save_files = False
@@ -22,13 +22,13 @@ class RtvSpider(scrapy.Spider, RootSpider):
     def parse(self, response):
         if self.save_files:
             article = response.url.split("/")[-2]
-            filename = f'./scraped-content/{spider_name}-{article}.html'
+            filename = f'./scraped-content/{SPIDER_NAME}-{article}.html'
             with open(filename, 'wb') as f:
                 f.write(response.body)
 
         
         article_titles = self.get_all_titles(response)
-        yield {'titles' : article_titles}
+        yield {SPIDER_NAME : article_titles}
 
 
     def get_all_titles(self, response):
