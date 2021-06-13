@@ -5,12 +5,16 @@
 import json
 from constants import FOLDER_NAMES
 from pathlib import Path
+from selenium import webdriver
+import time
+import os
 import csv
 
 
 def compare():
     webstemmer_titles = get_webstemmer_titles()
     scrapy_titles = get_scrapy_titles()
+    roadrunner_titles = get_roadrunner_titles()
     print(f'Number of titles scraped by scrapy: {get_total_titles_len(scrapy_titles)}')
     print(f'Number of titles scraped by webstemmer: {get_total_titles_len(webstemmer_titles)}')
 
@@ -23,7 +27,25 @@ def get_roadrunner_titles():
     '''
     Result format:
     '''
+    result = []
+    for webpage in FOLDER_NAMES:
+        webpage_titles = []
+        # with open(f'./roadrunner/output/{webpage}/results.html', 'r') as file:
+        cwd = os.getcwd()
+        driver = webdriver.Firefox()
+        print()
+        driver.get(f'file://{cwd}/roadrunner/output/{webpage}/results.html')
+        time.sleep(5)
+        htmlSource = driver.page_source
+        print(htmlSource)
 
+            # for line in file:
+            #     print(line)
+                
+        #         if line[:-1] != '':
+        #             webpage_titles.append(line[:-1])
+        # result.append({webpage : webpage_titles})
+    return result
 
 def get_webstemmer_titles():
     '''
