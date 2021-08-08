@@ -1,50 +1,64 @@
-# ./roadrunner/output/*.???
-# ./webstemmer/webstemmer/*.txt
-# ./scrapynews/scraped-content/*.json
+# ./roadrunner/output/{webpage}/{webpage}0_DataSet.xml
+# ./webstemmer/webstemmer/{webpage}.txt
+# ./scrapynews/scraped-content/{webpage}.json
 
 import json
 from constants import FOLDER_NAMES
 from pathlib import Path
 from selenium import webdriver
+
 import time
 import os
 import csv
 
 
 def compare():
-    webstemmer_titles = get_webstemmer_titles()
-    scrapy_titles = get_scrapy_titles()
+    start = time.time()
     roadrunner_titles = get_roadrunner_titles()
-    print(f'Number of titles scraped by scrapy: {get_total_titles_len(scrapy_titles)}')
-    print(f'Number of titles scraped by webstemmer: {get_total_titles_len(webstemmer_titles)}')
+    rr_end = time.time()
+    webstemmer_titles = get_webstemmer_titles()
+    ws_end = time.time()
+    scrapy_titles = get_scrapy_titles()
+    scrapy_end = time.time()
+
+    print(f'Number of titles scraped by roadrunner: {get_total_titles_len(roadrunner_titles)} in {rr_end-start}')
+    print(f'Number of titles scraped by webstemmer: {get_total_titles_len(webstemmer_titles)} in {ws_end-rr_end}')
+    print(f'Number of titles scraped by scrapy: {get_total_titles_len(scrapy_titles)} in {scrapy_end-ws_end}')
 
     generate_csv(scrapy_titles, 'scrapy')
     generate_csv(webstemmer_titles, 'webstemmer')
+    generate_csv(roadrunner_titles, 'roadrunner')
 
 
 
 def get_roadrunner_titles():
     '''
     Result format:
+    [
+        {'24ur': [...DATA...]},
+        
+    ]
     '''
     result = []
     for webpage in FOLDER_NAMES:
-        webpage_titles = []
-        # with open(f'./roadrunner/output/{webpage}/results.html', 'r') as file:
-        cwd = os.getcwd()
-        driver = webdriver.Firefox()
-        print()
-        driver.get(f'file://{cwd}/roadrunner/output/{webpage}/results.html')
-        time.sleep(5)
-        htmlSource = driver.page_source
-        print(htmlSource)
+        # slovenskenovice blocks execution due to error with generating wrapper
+        if webpage == 'slovenskenovice':
+            continue
 
-            # for line in file:
-            #     print(line)
-                
-        #         if line[:-1] != '':
-        #             webpage_titles.append(line[:-1])
-        # result.append({webpage : webpage_titles})
+        driver = webdriver.Firefox()
+        driver.get(f'file://{os.getcwd()}/roadrunner/output/{webpage}/{webpage}0_DataSet.xml')
+
+        title_list = driver.find_elements_by_class_name('card__title')
+        if webpage == 'delo':
+            title_list = driver.find_elements_by_class_name('text')
+        
+
+        webpage_titles = []
+        for title in title_list:
+            webpage_titles.append(title.text)
+        result.append({webpage : webpage_titles})
+
+        driver.close()
     return result
 
 def get_webstemmer_titles():
