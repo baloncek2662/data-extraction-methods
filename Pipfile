@@ -10,6 +10,7 @@ requests = "*"
 scrapy = "*"
 shub = "*"
 selenium = "*"
+lxml = "*"
 
 [requires]
 python_version = "3.8"
