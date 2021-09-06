@@ -7,13 +7,14 @@ import shutil
 import os
 
 from pathlib import Path
+
+from requests.api import head
 from lxml import html
 from constants import URL_LISTS, FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 def scrape():
     for i in range(len(URL_LISTS)):
         write_pages(URL_LISTS[i], FOLDER_NAMES[i])
-        print('=============\n\n')
 
 
 def write_pages(full_urls, folder_name):
@@ -26,13 +27,13 @@ def write_pages(full_urls, folder_name):
     Path(path).mkdir(parents=True, exist_ok=True) # creates directory
 
     for full_url in full_urls:
-        response = requests.get(full_url)
+        # we need to pass headers as a workaround for rtvslo, as it returns 410 without it
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
+        }
+        response = requests.get(full_url, headers=headers)
         # requests guesses the wrong encoding so we have to fix that
         response.encoding = 'utf-8'
-
-        # tmp workaround, rtv returns 410 status atm
-        if folder_name == 'rtvslo':
-            break
 
         # follow links to actual articles
         response_html = html.fromstring(response.content)
@@ -40,15 +41,9 @@ def write_pages(full_urls, folder_name):
         article_urls = get_article_urls(full_url, all_article_urls, folder_name)
         # get response for each article_url and write it to file
         for i in range(len(article_urls)):
-            article_response = requests.get(article_urls[i]) 
-            print(article_urls[i])
-            print(article_response.status_code)
+            article_response = requests.get(article_urls[i], headers=headers) 
             with open(path + str(i) +'.html', 'w') as file:
                 file.write(article_response.text)
-
-    
-    
-
 
     # creates zip, needed by webstemmer
     cwd = os.getcwd()
