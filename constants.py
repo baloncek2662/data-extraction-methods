@@ -1,11 +1,11 @@
 # to add a new cluster of websites to analyse, create a list of urls and add:
 # - the folder name to the FOLDER_NAMES list
-# - the list of urls to the URL_LISTS_LIST list
+# - the list of urls to the URL_LISTS list
 
 
 # 24ur
 URLS_24_UR = [
-    'https://www.24ur.com/',
+    'https://www.24ur.com/tv-oddaje/',
     'https://www.24ur.com/novice/',
     'https://www.24ur.com/sport/',
     'https://www.24ur.com/popin/',
@@ -14,10 +14,10 @@ URLS_24_UR = [
 
 # zurnal
 URLS_ZURNAL = [
-    'https://www.zurnal24.si/',
-    'https://www.zurnal24.si/slovenija/',
-    'https://www.zurnal24.si/svet/',
     'https://www.zurnal24.si/sport/',
+    'https://www.zurnal24.si/slovenija/',
+    'https://www.zurnal24.si/avto/',
+    'https://www.zurnal24.si/zdravje/',
     'https://www.zurnal24.si/magazin/',
 ]
 
@@ -32,18 +32,18 @@ URLS_DELO = [
 
 # rtvslo
 URLS_RTVSLO = [
-    'https://www.rtvslo.si/slovenija/',
-    'https://www.rtvslo.si/svet/',
     'https://www.rtvslo.si/sport/',
+    'https://www.rtvslo.si/svet/',
+    'https://www.rtvslo.si/slovenija/',
     'https://www.rtvslo.si/kultura/',
     'https://www.rtvslo.si/svet-zabave/',
 ]
 
 # slovenskenovice
 URLS_SLOVENSKE_NOVICE = [
-    'https://www.slovenskenovice.si/',
+    'https://www.slovenskenovice.si/novice/',
     'https://www.slovenskenovice.si/sport/',
-    'https://www.slovenskenovice.si/bralci/',
+    'https://www.slovenskenovice.si/bulvar/',
     'https://www.slovenskenovice.si/kronika/',
     'https://www.slovenskenovice.si/stil/',
 ]

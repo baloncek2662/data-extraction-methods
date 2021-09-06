@@ -12,34 +12,43 @@ from constants import URL_LISTS, FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 def scrape():
     for i in range(len(URL_LISTS)):
-        responses = get_url_responses(URL_LISTS[i])
-        write_pages(responses, FOLDER_NAMES[i])
+        write_pages(URL_LISTS[i], FOLDER_NAMES[i])
+        print('=============\n\n')
 
 
-def write_pages(pages, folder_name):
-    # requests guesses the wrong encoding so we have to fix that
-    for page in pages:
-        page.encoding = 'utf-8'
-
-        # tmp workaround, rtv returns 410 status atm
-        if folder_name == 'rtvslo':
-            break
-
-        # follow links to actual articles
-        page_html = html.fromstring(pages[0].content)
-        all_urls = page_html.xpath('//a/@href')
-        article_urls = get_article_urls(all_urls, folder_name)
-
+def write_pages(full_urls, folder_name):
+    # clena and prepare folder where we will write our results
     remove_path = Path(SCRAPE_DEST_FOLDER + folder_name)
     if remove_path.exists() and remove_path.is_dir():
         shutil.rmtree(remove_path)
 
     path = SCRAPE_DEST_FOLDER + folder_name + '/' + folder_name + '/'
     Path(path).mkdir(parents=True, exist_ok=True) # creates directory
+
+    for full_url in full_urls:
+        response = requests.get(full_url)
+        # requests guesses the wrong encoding so we have to fix that
+        response.encoding = 'utf-8'
+
+        # tmp workaround, rtv returns 410 status atm
+        if folder_name == 'rtvslo':
+            break
+
+        # follow links to actual articles
+        response_html = html.fromstring(response.content)
+        all_article_urls = response_html.xpath('//a/@href')
+        article_urls = get_article_urls(full_url, all_article_urls, folder_name)
+        # get response for each article_url and write it to file
+        for i in range(len(article_urls)):
+            article_response = requests.get(article_urls[i]) 
+            print(article_urls[i])
+            print(article_response.status_code)
+            with open(path + str(i) +'.html', 'w') as file:
+                file.write(article_response.text)
+
     
-    for i in range(len(pages)):
-        with open(path + str(i) +'.html', 'w') as file:
-            file.write(pages[i].text)
+    
+
 
     # creates zip, needed by webstemmer
     cwd = os.getcwd()
@@ -48,17 +57,15 @@ def write_pages(pages, folder_name):
     os.chdir(cwd)
 
 
-def get_url_responses(url_list):
-    result = []
-    for url in url_list:
-        result.append(requests.get(url))
-    return result
-
-def get_article_urls(all_urls, folder_name):
+def get_article_urls(full_url, all_article_urls, folder_name):
     # we judge relevant urls by the number of slashes
     # for 24ur and zurnal the correct number is 3
+    #   /sport/nogomet/nekdanji-francoski-nogometas-umrl-po-39-letih-v-komi.html
     # for the others (delo, rtv, slovenskenovice) the correct number is 4: 
-    # /sport/drugi-sporti/gajser-tekmecem-pokazal-iz-kaksnega-testa-so-sampioni/ 
+    #   /sport/drugi-sporti/gajser-tekmecem-pokazal-iz-kaksnega-testa-so-sampioni/ 
+    category = full_url.split('/')[-2]
     url_slashes_count = 3 if folder_name == '24ur' or folder_name == 'zurnal' else 4
-    article_urls = [u for u in all_urls if u.startswith('/sport/') and u.count('/') == url_slashes_count]
-    print(article_urls)
+    partial_article_urls = [u for u in all_article_urls if u.startswith(f'/{category}/') and u.count('/') == url_slashes_count]
+    root_url = '/'.join(full_url.split('/')[0:-2]) # this gets just the root url
+    full_article_urls = [root_url + au for au in partial_article_urls]
+    return full_article_urls
