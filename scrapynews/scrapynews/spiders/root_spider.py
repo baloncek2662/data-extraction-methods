@@ -1,3 +1,7 @@
+import os
+import glob
+from constants import SCRAPE_DEST_FOLDER
+
 class RootSpider():
     def __init__(self):
         self.xpath_expression = ''
@@ -15,3 +19,10 @@ class RootSpider():
                 result.append(el)
 
         return result
+
+    def get_local_urls_list(self):
+        urls_dir = f'{SCRAPE_DEST_FOLDER}{self.name}/{self.name}/*'
+        paths = glob.glob(urls_dir)
+        # add file:// prefix to make valid url out of path
+        return [f'file://{p}' for p in paths] 
+

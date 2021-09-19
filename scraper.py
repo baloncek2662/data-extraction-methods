@@ -18,7 +18,7 @@ def scrape():
 
 
 def write_pages(full_urls, folder_name):
-    # clena and prepare folder where we will write our results
+    # clean and prepare folder where we will write our results
     remove_path = Path(SCRAPE_DEST_FOLDER + folder_name)
     if remove_path.exists() and remove_path.is_dir():
         shutil.rmtree(remove_path)
@@ -28,6 +28,7 @@ def write_pages(full_urls, folder_name):
 
     for full_url in full_urls:
         # we need to pass headers as a workaround for rtvslo, as it returns 410 without it
+        # this makes the program much slower though!!
         headers = {
             'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
         }
