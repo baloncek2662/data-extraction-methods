@@ -36,7 +36,7 @@ URLS_RTVSLO = [
     'https://www.rtvslo.si/svet/',
     'https://www.rtvslo.si/zabava-in-slog/',
     'https://www.rtvslo.si/kultura/',
-    'https://www.rtvslo.si/svet-zabave/',
+    'https://www.rtvslo.si/lokalne-novice/',
 ]
 
 # slovenskenovice
