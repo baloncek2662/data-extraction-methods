@@ -1,6 +1,6 @@
 <preferences name="Default">
     <backtracking value="false"/>
-    <ambiguity value="0"/>
+    <ambiguity value="5"/>
     <occurrences value="1"/>
     <attributeValues value=""/>
     <LLk value="1"/>

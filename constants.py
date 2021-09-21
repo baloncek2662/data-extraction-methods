@@ -5,7 +5,7 @@
 
 # 24ur
 URLS_24_UR = [
-    'https://www.24ur.com/tv-oddaje/',
+    'https://www.24ur.com/magazin/',
     'https://www.24ur.com/novice/',
     'https://www.24ur.com/sport/',
     'https://www.24ur.com/popin/',
@@ -34,7 +34,7 @@ URLS_DELO = [
 URLS_RTVSLO = [
     'https://www.rtvslo.si/sport/',
     'https://www.rtvslo.si/svet/',
-    'https://www.rtvslo.si/slovenija/',
+    'https://www.rtvslo.si/zabava-in-slog/',
     'https://www.rtvslo.si/kultura/',
     'https://www.rtvslo.si/svet-zabave/',
 ]

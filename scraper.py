@@ -41,10 +41,18 @@ def write_pages(full_urls, folder_name):
         all_article_urls = response_html.xpath('//a/@href')
         article_urls = get_article_urls(full_url, all_article_urls, folder_name)
         # get response for each article_url and write it to file
-        for i in range(len(article_urls)):
-            article_response = requests.get(article_urls[i], headers=headers) 
-            with open(path + str(i) +'.html', 'w') as file:
+        last_category = ''
+        count = 0
+        for article_url in article_urls:
+            article_response = requests.get(article_url, headers=headers) 
+            url_slashes_count = 3 if folder_name == '24ur' or folder_name == 'zurnal' else 4
+            category = article_url.split('/')[-url_slashes_count]
+            with open(f'{path}{category}_{count}.html', 'w') as file:
                 file.write(article_response.text)
+            if last_category != category:
+                count = 0
+            last_category = category
+            count += 1
 
     # creates zip, needed by webstemmer
     cwd = os.getcwd()
