@@ -55,6 +55,11 @@ FOLDER_NAMES = [
     'delo',
     'rtvslo',
     'slovenskenovice',
+    # scraping not implemented for below folders!
+    'slovenskenovice-delo',
+    'zurnal-24ur',
+    '24ur-zurnal-rtvslo',
+    'all_mixed',
 ]
 
 

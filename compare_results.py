@@ -14,24 +14,24 @@ import csv
 
 def compare():
     start = time.time()
-    roadrunner_titles = get_roadrunner_titles()
+    roadrunner_results = get_roadrunner_results()
     rr_end = time.time()
-    webstemmer_titles = get_webstemmer_titles()
+    webstemmer_results = get_webstemmer_results()
     ws_end = time.time()
-    scrapy_titles = get_scrapy_titles()
+    scrapy_results = get_scrapy_results()
     scrapy_end = time.time()
 
-    print(f'Number of titles scraped by roadrunner: {get_total_titles_len(roadrunner_titles)} in {rr_end-start}')
-    print(f'Number of titles scraped by webstemmer: {get_total_titles_len(webstemmer_titles)} in {ws_end-rr_end}')
-    print(f'Number of titles scraped by scrapy: {get_total_titles_len(scrapy_titles)} in {scrapy_end-ws_end}')
+    print(f'Number of results scraped by roadrunner: {get_total_results_len(roadrunner_results)} in {rr_end-start}s')
+    print(f'Number of results scraped by webstemmer: {get_total_results_len(webstemmer_results)} in {ws_end-rr_end}s')
+    print(f'Number of results scraped by scrapy: {get_total_results_len(scrapy_results)} in {scrapy_end-ws_end}s')
 
-    generate_csv(scrapy_titles, 'scrapy')
-    generate_csv(webstemmer_titles, 'webstemmer')
-    generate_csv(roadrunner_titles, 'roadrunner')
+    generate_csv(roadrunner_results, 'scrapy')
+    generate_csv(roadrunner_results, 'webstemmer')
+    generate_csv(roadrunner_results, 'roadrunner')
 
 
 
-def get_roadrunner_titles():
+def get_roadrunner_results():
     '''
     Result format:
     [
@@ -41,13 +41,12 @@ def get_roadrunner_titles():
     '''
     result = []
     for webpage in FOLDER_NAMES:
-        # slovenskenovice blocks execution due to error with generating wrapper
-        if webpage == 'slovenskenovice':
+        # slovenskenovice and rtv block execution due to error with generating wrapper
+        if webpage == 'slovenskenovice' or webpage == 'rtvslo':
             continue
 
         driver = webdriver.Firefox()
         driver.get(f'file://{os.getcwd()}/roadrunner/output/{webpage}/{webpage}0_DataSet.xml')
-
         title_list = driver.find_elements_by_class_name('card__title')
         if webpage == 'delo':
             title_list = driver.find_elements_by_class_name('text')
@@ -58,10 +57,11 @@ def get_roadrunner_titles():
             webpage_titles.append(title.text)
         result.append({webpage : webpage_titles})
 
+        print(f'Number of titles parsed by Roadrunner in {webpage}: {len(title_list)}')
         driver.close()
     return result
 
-def get_webstemmer_titles():
+def get_webstemmer_results():
     '''
     Result format:
     [
@@ -81,7 +81,7 @@ def get_webstemmer_titles():
     return result
 
 
-def get_scrapy_titles():
+def get_scrapy_results():
     '''
     Result format:
     [
@@ -108,7 +108,7 @@ def get_scrapy_titles():
     return result
 
 
-def get_total_titles_len(titles_list):
+def get_total_results_len(titles_list):
     result = 0
     for title_dict in titles_list:
         for webpage in title_dict: # there is only webpage, but this is still the easiest option to count it
