@@ -47,7 +47,7 @@ def write_pages(full_urls, folder_name):
             article_response = requests.get(article_url, headers=headers) 
             url_slashes_count = 3 if folder_name == '24ur' or folder_name == 'zurnal' else 4
             category = article_url.split('/')[-url_slashes_count]
-            with open(f'{path}{category}_{count}.html', 'w') as file:
+            with open(f'{path}{folder_name}_{category}_{count}.html', 'w') as file:
                 file.write(article_response.text)
             if last_category != category:
                 count = 0

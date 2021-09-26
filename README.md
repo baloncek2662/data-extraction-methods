@@ -7,8 +7,8 @@ $ ./main.py
 ```
 
 `main.py` runs four functions:
-1. `scrape()`, which downloads the HTML from desired webpages into `./examples/` and creates a zip of them for Webstemmer to use 
-2. `roadrunner()`, which executes the <cite>[RoadRunner][1]</cite> method and saves results into `./roadrunner/output/`
+1. `scrape()`, which downloads the HTML from desired webpages into `./examples/` and creates a zip of them for Webstemmer to use. At the moment this function is commented out, as we want the corpus to stay constant. The `scraped-folders` folder, which is synced with the the FOLDER_NAMES constant in `constants.py` is available for download at: https://drive.google.com/file/d/1podWDM7qokj7Wn7-hS-yAPpOVX5nl6_3/view?usp=sharing 
+2. `roadrunner()`, which executes the <cite>[RoadRunner][1]</cite> method and saves results and generated wrappers (in the form of `*.html` and `.*xml` files) into `./roadrunner/output/`
 3. `webstemmer()`, which executes the <cite>[Webstemmer][2]</cite> method and saves results (in the form of `*.txt` files) and generated wrappers (in the form of `*.pat` files) into `./webstemmer/webstemmer/` 
 4. `scrapy()`, which executes a custom implementation of <cite>[Scrapy][4]</cite>, a web crawler that extracts data using XPath, and writes the results into `*.json` files in `./scrapynews/scraped-content/`
 

@@ -12,9 +12,10 @@ from compare_results import compare
 from constants import FOLDER_NAMES
 
 def main():
-    print('Scraping started')
-    scrape()
-    print('Scraping finished\nRoadrunner started\n')
+    #print('Scraping started')
+    #scrape()
+    #print('Scraping finished\nRoadrunner started\n')
+    print('Roadrunner started\n')
     start = time.time()
     roadrunner()
     rr_end = time.time()
