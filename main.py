@@ -13,7 +13,7 @@ from constants import FOLDER_NAMES
 
 def main():
     #print('Scraping started')
-    #scrape()
+    scrape()
     #print('Scraping finished\nRoadrunner started\n')
     print('Roadrunner started\n')
     start = time.time()
