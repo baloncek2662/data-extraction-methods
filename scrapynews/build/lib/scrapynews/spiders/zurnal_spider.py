@@ -3,9 +3,10 @@ from .root_spider import RootSpider
 
 SPIDER_NAME = 'zurnal'
 
+
 class ZurnalSpider(scrapy.Spider, RootSpider):
     name = SPIDER_NAME
-    
+
     def initialize(self):
         self.save_files = False
         if getattr(self, 'save-files', None) == 'True':
@@ -14,7 +15,7 @@ class ZurnalSpider(scrapy.Spider, RootSpider):
 
     def start_requests(self):
         self.initialize()
-            
+
         # TODO import from ../../../constants.py - URLS_ZURNAL
         urls = [
             'https://www.zurnal24.si/',
@@ -33,10 +34,8 @@ class ZurnalSpider(scrapy.Spider, RootSpider):
             with open(filename, 'wb') as f:
                 f.write(response.body)
 
-        
         article_titles = self.get_all_titles(response)
         yield {'titles' : article_titles}
-
 
     def get_all_titles(self, response):
         return super().get_all_titles(response)

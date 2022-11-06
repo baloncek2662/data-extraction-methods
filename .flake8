@@ -1,0 +1,21 @@
+[flake8]
+exclude =
+    __pycache__,
+    # downloaded packages
+    ./webstemmer
+    ./scrapynews/build/lib/scrapynews/settings.py
+    ./scrapynews/scrapynews/middlewares.py
+    ./scrapynews/scrapynews/pipelines.py
+    ./scrapynews/build/lib/scrapynews/middlewares.py
+    ./scrapynews/build/lib/scrapynews/pipelines.py
+
+extend-ignore =
+    # W605: invalid escape sequence ... often needed for bash commands
+    W605,
+    # E731: do not assign a lambda expression ... we allow lambdas
+    E731,
+    # E203: whitespace before ':' ... this disagrees with Black
+    E203,
+
+max-line-length =
+    120

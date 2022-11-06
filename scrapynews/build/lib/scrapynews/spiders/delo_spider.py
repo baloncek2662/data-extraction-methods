@@ -3,6 +3,7 @@ from .root_spider import RootSpider
 
 SPIDER_NAME = 'delo'
 
+
 class DeloSpider(scrapy.Spider, RootSpider):
     name = SPIDER_NAME
 
@@ -35,21 +36,15 @@ class DeloSpider(scrapy.Spider, RootSpider):
             with open(filename, 'wb') as f:
                 f.write(response.body)
 
-        
         article_titles = self.get_all_titles(response)
         yield {'titles' : article_titles}
 
         # NOT IN USE - use when urls are specific articles
-        #article_data_list = self.get_article_data_list(response)
+        # article_data_list = self.get_article_data_list(response)
 
     def get_all_titles(self, response):
         return super().get_all_titles(response)
 
-
-
-
-
-        
     # NOT IN USE - needs to scrape from different urls (www.delo.si)
     def get_article_data_list(self, response):
         title = response.xpath('//h1[has-class("article__title")]/text()').get()

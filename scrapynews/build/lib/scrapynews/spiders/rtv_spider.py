@@ -3,6 +3,7 @@ from .root_spider import RootSpider
 
 spider_name = 'rtv'
 
+
 class RtvSpider(scrapy.Spider, RootSpider):
     name = spider_name
 
@@ -14,7 +15,7 @@ class RtvSpider(scrapy.Spider, RootSpider):
 
     def start_requests(self):
         self.initialize()
-            
+
         # TODO import from ../../../constants.py - URLS_RTVSLO
         urls = [
             'https://www.rtvslo.si/slovenija/',
@@ -33,12 +34,8 @@ class RtvSpider(scrapy.Spider, RootSpider):
             with open(filename, 'wb') as f:
                 f.write(response.body)
 
-        
         article_titles = self.get_all_titles(response)
         yield {'titles' : article_titles}
 
-
     def get_all_titles(self, response):
         return super().get_all_titles(response)
-
-
