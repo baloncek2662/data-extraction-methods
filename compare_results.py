@@ -116,11 +116,8 @@ def get_scrapy_results():
 def get_total_results_len(titles_list):
     result = 0
     for title_dict in titles_list:
-        for (
-            webpage
-        ) in (
-            title_dict
-        ):  # there is only webpage, but this is still the easiest option to count it
+        # there is only webpage, but this is still the easiest option to count it
+        for webpage in title_dict:
             result += len(title_dict[webpage])
     return result
 
