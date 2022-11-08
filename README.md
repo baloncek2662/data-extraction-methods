@@ -22,6 +22,8 @@ In the end the information of time needed per webpage for each data extraction m
 SCRAPE_DEST_FOLDER="/home/scraped-folders/"`
 - Initialize <cite>[pipenv][3]</cite> by running `pipenv install`
 - Open pipenv shell by running `pipenv shell`
+- Add the repository folder to the bash PATH variable since the committed `geckodriver` binary is needed by Selenium to compare results. The executable is downloaded from the <cite>[geckodriver GitHub page][6]</cite>. This is done by running:
+`PATH=${PATH}:$(pwd)` in your bash terminal when located inside the repository's root folder.
 - Run the program by running `./main.py` from the repository's root folder
 
 
@@ -31,3 +33,4 @@ SCRAPE_DEST_FOLDER="/home/scraped-folders/"`
 [3]: https://pypi.org/project/pipenv/
 [4]: https://scrapy.org/
 [5]: https://developer.mozilla.org/en-US/docs/Web/XPath
+[6]: https://github.com/mozilla/geckodriver/releases/download/v0.32.0/geckodriver-v0.32.0-linux64.tar.gz
