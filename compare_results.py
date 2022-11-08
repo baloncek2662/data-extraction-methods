@@ -31,8 +31,8 @@ def compare():
         f"Number of results scraped by scrapy: {get_total_results_len(scrapy_results)} in {scrapy_end-ws_end}s"
     )
 
-    generate_csv(roadrunner_results, "scrapy")
-    generate_csv(roadrunner_results, "webstemmer")
+    generate_csv(scrapy_results, "scrapy")
+    generate_csv(webstemmer_results, "webstemmer")
     generate_csv(roadrunner_results, "roadrunner")
 
 
@@ -47,7 +47,7 @@ def get_roadrunner_results():
     result = []
     for webpage in FOLDER_NAMES:
         # slovenskenovice and rtv block execution due to error with generating wrapper
-        if webpage == "slovenskenovice" or webpage == "rtvslo":
+        if webpage == "rtvslo":
             continue
 
         driver = webdriver.Firefox()
