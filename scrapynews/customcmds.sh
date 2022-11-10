@@ -1,7 +1,7 @@
 #!/bin/bash
 
-readonly BASE_PATH=$(pwd)
-export PYTHONPATH=$PYTHONPATH:BASE_PATH/../../
+BASE_PATH=$(pwd)
+export PYTHONPATH=$PYTHONPATH:$BASE_PATH/../
 
 SPIDER_NAMES=('delo' 'rtvslo' 'zurnal' '24ur' 'slovenskenovice')
 
