@@ -32,7 +32,7 @@ def analyse_pages(folder_name):
         " " + folder_name + ".pat " + SCRAPE_DEST_FOLDER + folder_name + ".zip"
     )
     # results destination file
-    extract_command += " > " + folder_name + ".txt"
+    extract_command += " > " + folder_name + "_WS" + ".txt"
     subprocess.run(extract_command, shell=True, check=True)
 
     print("\nExecution time: {:.2f}s".format(time.time() - start_time))

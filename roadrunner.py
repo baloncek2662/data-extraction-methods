@@ -14,7 +14,7 @@ def roadrunner():
 def analyse_pages(folder_name):
     # Base java command
     command = "java -cp lib/roadrunner.jar:lib/nekohtml.jar:lib/xercesImpl.jar:lib/xmlParserAPIs.jar roadrunner.Shell"
-    command += " -N" + folder_name  # output folder
+    command += " -N" + folder_name + "_RR"  # output folder located in 'output/folder_name'
     command += " -Oexamples/prefs.xml"  # preferences to be used
 
     pages = glob.glob(SCRAPE_DEST_FOLDER + folder_name + "/" + folder_name + "/*")
