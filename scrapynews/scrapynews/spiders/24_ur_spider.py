@@ -19,8 +19,8 @@ class Spider24ur(scrapy.Spider, RootSpider):
 
     def parse(self, response):
         if self.save_files:
-            article = response.url.split("/")[-2]
-            filename = f"./scraped-content/{self.name}-{article}.html"
+            saved_filename = response.url.split("/")[-1]
+            filename = f"./scraped-content/{saved_filename}.html"
             with open(filename, "wb") as f:
                 f.write(response.body)
 
