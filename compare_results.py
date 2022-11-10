@@ -52,7 +52,7 @@ def get_roadrunner_results():
 
         driver = webdriver.Firefox()
         driver.get(
-            f"file://{os.getcwd()}/roadrunner/output/{webpage}/{webpage}0_DataSet.xml"
+            f"file://{os.getcwd()}/roadrunner/output/{webpage}_RR/{webpage}_RR0_DataSet.xml"
         )
         title_list = driver.find_elements_by_class_name("card__title")
         if webpage == "delo":
@@ -79,7 +79,7 @@ def get_webstemmer_results():
     result = []
     for webpage in FOLDER_NAMES:
         webpage_titles = []
-        with open(f"./webstemmer/webstemmer/{webpage}.txt", "r") as file:
+        with open(f"./webstemmer/webstemmer/{webpage}_WS.txt", "r") as file:
             for line in file:
                 if line[:-1] != "":
                     webpage_titles.append(line[:-1])
@@ -99,13 +99,14 @@ def get_scrapy_results():
     result = []
     for webpage in FOLDER_NAMES:
         webpage_titles = {}
-        with open(f"./scrapynews/scraped-content/{webpage}.json", "r") as file:
+        with open(f"./scrapynews/scraped-content/{webpage}_SN.json", "r") as file:
             webpage_titles = json.load(file)
         # webpage_titles is an array of 5 objects: {'webpage': [...DATA...]}
         # we need to combine them into a single object: {'webpage': [...DATA...]},
         titles_list = []
         for section in webpage_titles:
             section_titles_list = section[webpage]
+            # section_titles_list = section[webpage]["subtitle"]
             titles_list.extend(section_titles_list)
 
         result.append({webpage: titles_list})

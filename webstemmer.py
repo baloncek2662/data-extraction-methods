@@ -21,7 +21,7 @@ def analyse_pages(folder_name):
     # html src
     analyse_command += " " + SCRAPE_DEST_FOLDER + folder_name + ".zip"
     # layout pattern destination file
-    analyse_command += " > " + folder_name + ".pat"
+    analyse_command += " > " + folder_name + "_WS" + ".pat"
     subprocess.run(analyse_command, shell=True, check=True)
 
     extract_command = "./extract.py"
@@ -29,7 +29,7 @@ def analyse_pages(folder_name):
     extract_command += " -t 0.5 -T 0.7 -M 20"
     # layout analysis file and html source
     extract_command += (
-        " " + folder_name + ".pat " + SCRAPE_DEST_FOLDER + folder_name + ".zip"
+        " " + folder_name + "_WS" + ".pat " + SCRAPE_DEST_FOLDER + folder_name + ".zip"
     )
     # results destination file
     extract_command += " > " + folder_name + "_WS" + ".txt"
