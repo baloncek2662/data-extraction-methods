@@ -101,18 +101,18 @@ def get_scrapy_results():
     """
     result = []
     for webpage in FOLDER_NAMES:
-        webpage_titles = {}
+        scrapy_json = {}
         with open(f"./scrapynews/scraped-content/{webpage}_SN.json", "r") as file:
-            webpage_titles = json.load(file)
-        # webpage_titles is an array of 5 objects: {'webpage': [...DATA...]}
+            scrapy_json = json.load(file)
+        # scrapy_json is an array of 5 objects: {'webpage': [...DATA...], 'webpage': [...DATA...], ...}
         # we need to combine them into a single object: {'webpage': [...DATA...]},
-        titles_list = []
-        for section in webpage_titles:
-            section_titles_list = section[webpage]
-            # section_titles_list = section[webpage]["subtitle"]
-            titles_list.extend(section_titles_list)
-
-        result.append({webpage: titles_list})
+        webpage_titles = []
+        for article in scrapy_json:
+            article_title = article[webpage]["title"]
+            if article_title is None:
+                continue
+            webpage_titles.append(article_title.rstrip())
+        result.append({webpage: webpage_titles})
 
     return result
 
