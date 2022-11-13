@@ -31,9 +31,9 @@ def compare():
         f"Number of results scraped by scrapy: {get_total_results_len(scrapy_results)} in {scrapy_end-ws_end}s"
     )
 
-    generate_csv(scrapy_results, "scrapy")
-    generate_csv(webstemmer_results, "webstemmer")
     generate_csv(roadrunner_results, "roadrunner")
+    generate_csv(webstemmer_results, "webstemmer")
+    generate_csv(scrapy_results, "scrapy")
 
 
 def get_roadrunner_results():
@@ -77,12 +77,15 @@ def get_webstemmer_results():
     ]
     """
     result = []
+    # Titles in webstemmer output files are found in lines starting with "TITLE: "
+    TITLE_STR = "TITLE: "
     for webpage in FOLDER_NAMES:
         webpage_titles = []
         with open(f"./webstemmer/webstemmer/{webpage}_WS.txt", "r") as file:
-            for line in file:
-                if line[:-1] != "":
-                    webpage_titles.append(line[:-1])
+            lines = [line.rstrip() for line in file]
+            for line in lines:
+                if line.startswith(TITLE_STR):
+                    webpage_titles.append(line[len(TITLE_STR):])
         result.append({webpage: webpage_titles})
 
     return result
