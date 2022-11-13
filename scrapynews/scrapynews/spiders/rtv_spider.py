@@ -31,7 +31,7 @@ class RtvSpider(scrapy.Spider, RootSpider):
         # article_titles = self.get_all_titles(response)
 
     def get_article_data_list(self, response):
-        title = response.xpath("//h1/text()").get()
+        title = response.xpath('//div[has-class("news-container")]//h1/text()').get()
         subtitle = response.xpath('//p[has-class("lead")]/text()').get()
         content = self.get_article_content(response)
         image_captions_list = response.xpath("//figcaption/text()").getall()

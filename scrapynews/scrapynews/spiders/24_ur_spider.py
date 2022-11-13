@@ -31,7 +31,7 @@ class Spider24ur(scrapy.Spider, RootSpider):
         # article_titles = self.get_all_titles(response)
 
     def get_article_data_list(self, response):
-        title = response.xpath('//h1[has-class("article__title")]/text()').get()
+        title = response.xpath('//h1[has-class("onl-article-title")]/text()').get()
         subtitle = response.xpath('//div[has-class("article__summary")]/text()').get()
         content = self.get_article_content(response)
         image_captions_list = response.xpath(
