@@ -44,6 +44,7 @@ def write_pages(full_urls, folder_name):
         count = 0
         for article_url in article_urls:
             article_response = requests.get(article_url, headers=headers)
+            article_response.encoding = "utf-8"
             url_slashes_count = (
                 3 if folder_name == "24ur" or folder_name == "zurnal" else 4
             )
