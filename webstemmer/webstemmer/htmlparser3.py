@@ -109,7 +109,7 @@ class HTMLParser3(SGMLParser3):
     self.debug = debug
     self.handler = handler
     self.linepos = 0
-    self.decoder = getdecoder(charset or 'iso-8859-1')
+    self.decoder = getdecoder(charset or 'utf-8')
     self.charset = charset
     self.tagstack = []
     if self.debug:

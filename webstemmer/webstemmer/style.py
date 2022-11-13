@@ -693,7 +693,7 @@ class ActiveStyleSheet(StyleSheet):
       (fp, content_type, charset) = self.agent.get(url)
       base_href0 = self.base_href
       self.base_href = url
-      self.parse_lines(fp, charset or 'iso-8859-1')
+      self.parse_lines(fp, charset or 'utf-8')
       self.base_href = base_href0
       fp.close()
     except IOError:
@@ -712,7 +712,7 @@ def parse_inline(style, s, charset=None):
 def read_stylesheet(args=None):
   import fileinput
   stylesheet = StyleSheet()
-  stylesheet.parse_lines(fileinput.input(args), 'iso-8859-1')
+  stylesheet.parse_lines(fileinput.input(args), 'utf-8')
   stylesheet.dump()
   return
 

@@ -419,7 +419,7 @@ if __name__ == '__main__':
     (opts, args) = getopt.getopt(sys.argv[1:], 'dc:C:b:')
   except getopt.GetoptError:
     usage()
-  (charset_in, codec_out, base_href) = ('iso-8859-1', 'euc-jp', '')
+  (charset_in, codec_out, base_href) = ('utf-8', 'euc-jp', '')
   for (k, v) in opts:
     if k == '-d': debug += 1
     elif k == '-c': charset_in = v

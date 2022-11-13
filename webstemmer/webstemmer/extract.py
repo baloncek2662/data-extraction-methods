@@ -160,7 +160,7 @@ class LayoutPatternSet:
 class TextExtractor:
   
   def __init__(self, patternset, pat_threshold=0.9, diffscore_threshold=0.5, mainscore_threshold=10,
-               default_charset='iso-8859-1', codec_out='utf-8', strict=True, 
+               default_charset='utf-8', codec_out='utf-8', strict=True, 
                linkinfo='linkinfo', debug=0):
     self.pat_threshold = pat_threshold
     self.diffscore_threshold = diffscore_threshold
@@ -198,7 +198,7 @@ def main():
   except getopt.GetoptError:
     usage()
   (debug, pat_threshold, diffscore_threshold, mainscore_threshold, default_charset, codec_out, strict) = \
-          (0, 0.8, 0.5, 50, 'iso-8859-1', 'utf-8', False)
+          (0, 0.8, 0.5, 50, 'utf-8', 'utf-8', False)
   acldb = None
   mangle_pat = None
   for (k, v) in opts:

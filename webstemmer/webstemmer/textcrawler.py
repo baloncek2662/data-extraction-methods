@@ -391,7 +391,7 @@ def main():
   except getopt.GetoptError:
     usage()
   (debug, maxlevel, cookie_file, delay) = (0, 1, None, 0)
-  (index_html, default_charset, urldb, timeout) = ('', 'iso-8859-1', None, 300)
+  (index_html, default_charset, urldb, timeout) = ('', 'utf-8', None, 300)
   (baseid, outfile, linkinfo) = (None, None, 'linkinfo')
   reftxtdb = None
   acldb = None
