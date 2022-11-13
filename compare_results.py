@@ -6,6 +6,8 @@ import json
 from constants import FOLDER_NAMES
 from pathlib import Path
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+
 
 import time
 import os
@@ -47,24 +49,23 @@ def get_roadrunner_results():
     result = []
     for webpage in FOLDER_NAMES:
         # slovenskenovice and rtv block execution due to error with generating wrapper
-        if webpage == "rtvslo":
+        if webpage == "slovenskenovice" or webpage == "rtvslo":
             continue
 
         driver = webdriver.Firefox()
         driver.get(
             f"file://{os.getcwd()}/roadrunner/output/{webpage}_RR/{webpage}_RR0_DataSet.xml"
         )
-        title_list = driver.find_elements_by_class_name("card__title")
-        if webpage == "delo":
-            title_list = driver.find_elements_by_class_name("text")
-
-        webpage_titles = []
-        for title in title_list:
-            webpage_titles.append(title.text)
+        webpage_titles = driver.find_elements(
+            By.XPATH, '/html/body/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/div/div'
+        )
+        webpage_titles = [
+            title.text for title in webpage_titles if title.text != 'null'
+        ]
         result.append({webpage: webpage_titles})
 
-        print(f"Number of titles parsed by Roadrunner in {webpage}: {len(title_list)}")
         driver.close()
+
     return result
 
 
