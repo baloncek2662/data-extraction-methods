@@ -62,7 +62,16 @@ def get_roadrunner_results():
         webpage_titles = [
             title.text for title in webpage_titles if title.text != 'null'
         ]
-        result.append({webpage: webpage_titles})
+
+        # Roadrunner does not produce a standardized format of subtitles and contents so we leave
+        # these fields empty.
+        webpage_results = {
+            "titles": webpage_titles,
+            "subtitles": [],
+            "contents": [],
+        }
+
+        result.append({webpage: webpage_results})
 
         driver.close()
 
@@ -79,15 +88,38 @@ def get_webstemmer_results():
     """
     result = []
     # Titles in webstemmer output files are found in lines starting with "TITLE: "
-    TITLE_STR = "TITLE: "
+    # Subtitles and content are found in lines starting with "SUB-xx: " and "MAIN-xx: "
+    TITLE_STR, SUBTITLE_STR, CONTENT_STR = "TITLE: ", "SUB", "MAIN"
     for webpage in FOLDER_NAMES:
-        webpage_titles = []
+        webpage_titles, webpage_subtitles, webpage_contents = [], [], []
+        article_subtitle, article_content = "", ""
         with open(f"./webstemmer/webstemmer/{webpage}_WS.txt", "r") as file:
             lines = [line.rstrip() for line in file]
             for line in lines:
+                # Subtitles and main content are split into several lines, so we combine them into a single
+                # string and then add it to the list. The string is reset whenever an empty line is found since
+                # that means that the next batch of lines belongs to a new article.
+                if line == "":
+                    if article_subtitle.rstrip() != "":
+                        webpage_subtitles.append(article_subtitle.rstrip())
+                    if article_content.rstrip() != "":
+                        webpage_contents.append(article_content.rstrip())
+                    article_subtitle, article_content = "", ""
+
                 if line.startswith(TITLE_STR):
-                    webpage_titles.append(line[len(TITLE_STR):])
-        result.append({webpage: webpage_titles})
+                    webpage_titles.append(line.split(":")[1].rstrip())
+                elif line.startswith(SUBTITLE_STR):
+                    article_subtitle += f"{line.split(': ')[1].rstrip()} "
+                elif line.startswith(CONTENT_STR):
+                    article_content += f"{line.split(': ')[1].rstrip()} "
+
+        webpage_results = {
+            "titles": webpage_titles,
+            "subtitles": webpage_subtitles,
+            "contents": webpage_contents,
+        }
+
+        result.append({webpage: webpage_results})
 
     return result
 
@@ -107,13 +139,25 @@ def get_scrapy_results():
             scrapy_json = json.load(file)
         # scrapy_json is an array of 5 objects: {'webpage': [...DATA...], 'webpage': [...DATA...], ...}
         # we need to combine them into a single object: {'webpage': [...DATA...]},
-        webpage_titles = []
+        webpage_titles, webpage_subtitles, webpage_contents = [], [], []
         for article in scrapy_json:
             article_title = article[webpage]["title"]
-            if article_title is None:
-                continue
-            webpage_titles.append(article_title.rstrip())
-        result.append({webpage: webpage_titles})
+            article_subtitle = article[webpage]["subtitle"]
+            article_content = article[webpage]["content"]
+            if article_title is not None:
+                webpage_titles.append(article_title.rstrip())
+            if article_subtitle is not None:
+                webpage_subtitles.append(article_subtitle.rstrip())
+            if article_content is not None:
+                webpage_contents.append(article_content.rstrip())
+
+        webpage_results = {
+            "titles": webpage_titles,
+            "subtitles": webpage_subtitles,
+            "contents": webpage_contents,
+        }
+
+        result.append({webpage: webpage_results})
 
     return result
 
@@ -127,41 +171,42 @@ def get_total_results_len(titles_list):
     return result
 
 
-def generate_csv(titles_list, csv_name):
+def generate_csv(webpages_dict_list, csv_name):
     """
     Generate a csv with 5 columns, one for each webpage.
-    All the webpage's titles are in the same column
-    Input format (titles_list) must be:
+    All the webpage's categories are in the same column
+    Input format (category_list) must be:
     [
-        {'24ur': [...DATA...]},
+        {'webpage': [{'category': [...DATA...]} ]},
 
     ]
     """
     Path("./results").mkdir(parents=True, exist_ok=True)
-    with open(f"./results/{csv_name}.csv", "w", newline="") as csvfile:
-        csv_writer = csv.writer(csvfile, delimiter=",", quoting=csv.QUOTE_ALL)
-        first_row = get_first_csv_row()
-        csv_writer.writerow(first_row)
+    for category in ["titles", "subtitles", "contents"]:
+        with open(f"./results/{csv_name}_{category}.csv", "w", newline="") as csvfile:
+            csv_writer = csv.writer(csvfile, delimiter=",", quoting=csv.QUOTE_ALL)
+            first_row = get_first_csv_row()
+            csv_writer.writerow(first_row)
 
-        row_count = 0
-        no_more_rows = False
-        while not no_more_rows:
-            csv_row = []
-            no_more_rows = True
-            for title_dict in titles_list:
-                for webpage in title_dict:  # there is only webpage
-                    webpage_titles_list = title_dict[webpage]
-                    if (
-                        len(webpage_titles_list) <= row_count
-                    ):  # if no more rows left for this webpage, append empty space
-                        csv_row.append(" ")
-                    else:  # else append the title
-                        csv_row.append(webpage_titles_list[row_count])
-                        no_more_rows = False
-                    csv_row.append(" ")  # always append an empty space as the delimited
-            csv_row = csv_row[:-1]  # delete last empty space
-            csv_writer.writerow(csv_row)
-            row_count += 1
+            row_count = 0
+            no_more_rows = False
+            while not no_more_rows:
+                csv_row = []
+                no_more_rows = True
+                for webpage_dict in webpages_dict_list:
+                    for webpage in webpage_dict:  # there is only webpage
+                        webpage_category_list = webpage_dict[webpage][category]
+                        if (
+                            len(webpage_category_list) <= row_count
+                        ):  # if no more rows left for this webpage, append empty space
+                            csv_row.append(" ")
+                        else:  # else append the title
+                            csv_row.append(webpage_category_list[row_count])
+                            no_more_rows = False
+                        csv_row.append(" ")  # always append an empty space as the delimiter
+                csv_row = csv_row[:-1]  # delete last empty space
+                csv_writer.writerow(csv_row)
+                row_count += 1
 
 
 def get_first_csv_row():
