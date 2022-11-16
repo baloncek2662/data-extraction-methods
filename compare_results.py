@@ -48,8 +48,8 @@ def get_roadrunner_results():
     """
     result = []
     for webpage in FOLDER_NAMES:
-        # slovenskenovice and rtv block execution due to error with generating wrapper
-        if webpage == "slovenskenovice" or webpage == "rtvslo":
+        # rtv blocks execution due to error with generating wrapper
+        if webpage == "rtvslo":
             continue
 
         driver = webdriver.Firefox()
