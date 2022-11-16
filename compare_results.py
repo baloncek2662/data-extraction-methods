@@ -57,10 +57,10 @@ def get_roadrunner_results():
             f"file://{os.getcwd()}/roadrunner/output/{webpage}_RR/{webpage}_RR0_DataSet.xml"
         )
         webpage_titles = driver.find_elements(
-            By.XPATH, '/html/body/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/div/div'
+            By.XPATH, "/html/body/table/tbody/tr[2]/td/table/tbody/tr[2]/td[1]/div/div"
         )
         webpage_titles = [
-            title.text for title in webpage_titles if title.text != 'null'
+            title.text for title in webpage_titles if title.text != "null"
         ]
 
         # Roadrunner does not produce a standardized format of subtitles and contents so we leave
@@ -203,7 +203,8 @@ def generate_csv(webpages_dict_list, csv_name):
                         else:  # else append the title
                             csv_row.append(webpage_category_list[row_count])
                             no_more_rows = False
-                        csv_row.append(" ")  # always append an empty space as the delimiter
+                        # always append an empty space as the delimiter
+                        csv_row.append(" ")
                 csv_row = csv_row[:-1]  # delete last empty space
                 csv_writer.writerow(csv_row)
                 row_count += 1
