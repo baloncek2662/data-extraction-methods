@@ -4,9 +4,9 @@ import time
 
 
 from scraper import scrape
-from roadrunner import roadrunner
-from webstemmer import webstemmer
-from scrapy_runner import scrapy
+from exec_roadrunner import roadrunner
+from exec_webstemmer import webstemmer
+from exec_scrapynews import scrapynews
 from compare_results import compare
 
 from constants import FOLDER_NAMES
@@ -29,7 +29,7 @@ def main():
     ws_end = time.time()
     print("\nWebstemmer finished\n\n")
 
-    scrapy()
+    scrapynews()
 
     scrapy_end = time.time()
     print("\nScrapy finished\n\n")

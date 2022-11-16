@@ -2,7 +2,7 @@ import subprocess
 import os
 
 
-def scrapy():
+def scrapynews():
     os.chdir("scrapynews")
     subprocess.run("bash customcmds.sh", shell=True, check=True)
     os.chdir("..")
