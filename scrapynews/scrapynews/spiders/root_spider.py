@@ -1,5 +1,5 @@
 import glob
-from constants import SCRAPE_DEST_FOLDER
+from .constants import SCRAPE_DEST_FOLDER
 
 
 class RootSpider:
