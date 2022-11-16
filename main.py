@@ -16,23 +16,13 @@ def main():
     # print("Scraping started")
     # scrape()
     # print("Scraping finished\nRoadrunner started\n")
-    print("Roadrunner started\n")
     start = time.time()
-
     roadrunner()
-
     rr_end = time.time()
-    print("Roadrunner finished\nWebstemmer started\n")
-
     webstemmer()
-
     ws_end = time.time()
-    print("\nWebstemmer finished\n\n")
-
     scrapynews()
-
     scrapy_end = time.time()
-    print("\nScrapy finished\n\n")
 
     print("Execution times:")
     print(f"RoadRunner average time per webpage: {(rr_end-start)/len(FOLDER_NAMES)}s")

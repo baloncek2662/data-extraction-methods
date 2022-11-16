@@ -7,6 +7,8 @@ from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 
 def roadrunner():
+    print("===== Roadrunner started =====\n")
+
     os.chdir("roadrunner")
 
     for folder in FOLDER_NAMES:

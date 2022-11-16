@@ -6,6 +6,8 @@ from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 
 def webstemmer():
+    print("===== Webstemmer started =====\n")
+
     os.chdir("webstemmer/webstemmer")
 
     for folder in FOLDER_NAMES:

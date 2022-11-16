@@ -6,6 +6,8 @@ from constants import FOLDER_NAMES
 
 
 def scrapynews():
+    print("===== Scrapynews started =====\n")
+
     os.chdir("scrapynews")
 
     for folder in FOLDER_NAMES:
