@@ -17,7 +17,7 @@ def scrapynews():
 def analyse_pages(folder_name):
     start_time = time.time()
 
-    print(f"Running scrapynews on folder {folder_name}")
+    print(f"Running scrapynews on folder {folder_name}\n")
 
     command = f"scrapy crawl {folder_name} -O scraped-content/{folder_name}_SN.json"
     # options to avoid log spamming and duplicate saving of html files
@@ -26,4 +26,4 @@ def analyse_pages(folder_name):
     subprocess.run(command, shell=True, check=True)
 
     print("\nExecution time: {:.2f}s".format(time.time() - start_time))
-    print("--------------------------------------------\n")
+    print("\n--------------------------------------------\n")

@@ -6,14 +6,18 @@ from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
 
 
 def webstemmer():
+    os.chdir("webstemmer/webstemmer")
+
     for folder in FOLDER_NAMES:
         analyse_pages(folder)
 
+    os.chdir("../..")
+
 
 def analyse_pages(folder_name):
-    os.chdir("webstemmer/webstemmer")
-
     start_time = time.time()
+
+    print(f"Running webstemmer on folder {folder_name}\n")
 
     analyse_command = "./analyze.py"
     # options
@@ -29,13 +33,10 @@ def analyse_pages(folder_name):
     extract_command += " -t 0.5 -T 0.7 -M 20"
     # layout analysis file and html source
     extract_command += f" {folder_name}_WS.pat {SCRAPE_DEST_FOLDER}{folder_name}.zip"
-
     # results destination file
     extract_command += f" > {folder_name}_WS.txt"
+
     subprocess.run(extract_command, shell=True, check=True)
 
     print("\nExecution time: {:.2f}s".format(time.time() - start_time))
-
-    os.chdir("../..")
-
-    print("--------------------------------------------\n")
+    print("\n--------------------------------------------\n")
