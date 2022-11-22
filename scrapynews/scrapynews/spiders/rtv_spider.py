@@ -34,19 +34,10 @@ class RtvSpider(scrapy.Spider, RootSpider):
         title = response.xpath('//div[has-class("news-container")]//h1/text()').get()
         subtitle = response.xpath('//p[has-class("lead")]/text()').get()
         content = self.get_article_content(response)
-        image_captions_list = response.xpath("//figcaption/text()").getall()
-        image_captions_list_trimmed = []
-        # we need to trim \t and \n from list and remove empty elements
-        for item in image_captions_list:
-            item_split = item.split()
-            item_joined = " ".join(item_split)
-            if item_joined:
-                image_captions_list_trimmed.append(item_joined)
         return {
             "title": title,
             "subtitle": subtitle,
             "content": content,
-            "image_captions_list": image_captions_list_trimmed,
         }
 
     def get_article_content(self, response):

@@ -34,14 +34,10 @@ class ZurnalSpider(scrapy.Spider, RootSpider):
         title = response.xpath('//h1[has-class("article__title")]/text()').get()
         subtitle = response.xpath('//div[has-class("article__leadtext")]/text()').get()
         content = self.get_article_content(response)
-        image_captions_list = response.xpath(
-            '//span[has-class("figure__title")]/text()'
-        ).getall()
         return {
             "title": title,
             "subtitle": subtitle,
             "content": content,
-            "image_captions_list": image_captions_list,
         }
 
     def get_article_content(self, response):
