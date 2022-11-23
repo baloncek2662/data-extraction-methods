@@ -23,15 +23,9 @@ def compare():
     scrapy_results = get_scrapy_results()
     scrapy_end = time.time()
 
-    print(
-        f"Number of results scraped by roadrunner: {get_total_results_len(roadrunner_results)} in {rr_end-start}s"
-    )
-    print(
-        f"Number of results scraped by webstemmer: {get_total_results_len(webstemmer_results)} in {ws_end-rr_end}s"
-    )
-    print(
-        f"Number of results scraped by scrapy: {get_total_results_len(scrapy_results)} in {scrapy_end-ws_end}s"
-    )
+    print_results_len(roadrunner_results, rr_end - start, "Roadrunner")
+    print_results_len(webstemmer_results, ws_end - rr_end, "Webstemmer")
+    print_results_len(scrapy_results, scrapy_end - ws_end, "Scrapy")
 
     generate_csv(roadrunner_results, "roadrunner")
     generate_csv(webstemmer_results, "webstemmer")
@@ -162,13 +156,27 @@ def get_scrapy_results():
     return result
 
 
-def get_total_results_len(titles_list):
-    result = 0
-    for title_dict in titles_list:
+def print_results_len(results_list, time, method):
+    result = {"titles": 0, "subtitles": 0, "contents": 0}
+    print()
+    for result_dict in results_list:
         # there is only webpage, but this is still the easiest option to count it
-        for webpage in title_dict:
-            result += len(title_dict[webpage])
-    return result
+        for webpage in result_dict:
+            for key in ["titles", "subtitles", "contents"]:
+                result_key_len = len(result_dict[webpage][key])
+                print(
+                    f"Webpage [{webpage:15s}] scraped [{str(result_key_len).zfill(2)}] [{key:9s}] using {method}"
+                )
+                result[key] += result_key_len
+
+    print(f"{method} titles scraped: [{result['titles']}] in [{time}] seconds")
+    print(f"{method} subtitles scraped: [{result['subtitles']}] in [{time}] seconds")
+    print(f"{method} contents scraped: [{result['contents']}] in [{time}] seconds")
+    print(
+        f"{method} scraped [{result}] for a total of "
+        f"[{result['titles'] + result['subtitles'] + result['contents']}] "
+        f"results in [{time}] seconds"
+    )
 
 
 def generate_csv(webpages_dict_list, csv_name):
