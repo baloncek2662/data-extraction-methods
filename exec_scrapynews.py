@@ -1,10 +1,11 @@
 import subprocess
 import os
-import time
 
 from constants import FOLDER_NAMES
+from utils import print_time
 
 
+@print_time
 def scrapynews():
     print("===== Scrapynews started =====\n")
 
@@ -17,8 +18,6 @@ def scrapynews():
 
 
 def analyse_pages(folder_name):
-    start_time = time.time()
-
     print(f"Running scrapynews on folder {folder_name}\n")
 
     command = f"scrapy crawl {folder_name} -O results/{folder_name}_SN.json"
@@ -26,6 +25,3 @@ def analyse_pages(folder_name):
     command += " -a save-files=False -s LOG_ENABLED=False"
 
     subprocess.run(command, shell=True, check=True)
-
-    print("\nExecution time: {:.2f}s".format(time.time() - start_time))
-    print("\n--------------------------------------------\n")

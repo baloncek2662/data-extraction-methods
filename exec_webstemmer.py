@@ -1,10 +1,11 @@
 import os
 import subprocess
-import time
 
 from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
+from utils import print_time
 
 
+@print_time
 def webstemmer():
     print("===== Webstemmer started =====\n")
 
@@ -17,8 +18,6 @@ def webstemmer():
 
 
 def analyse_pages(folder_name):
-    start_time = time.time()
-
     print(f"Running webstemmer on folder {folder_name}\n")
 
     analyse_command = "./analyze.py"
@@ -39,6 +38,3 @@ def analyse_pages(folder_name):
     extract_command += f" > {folder_name}_WS.txt"
 
     subprocess.run(extract_command, shell=True, check=True)
-
-    print("\nExecution time: {:.2f}s".format(time.time() - start_time))
-    print("\n--------------------------------------------\n")
