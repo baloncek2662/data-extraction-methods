@@ -76,3 +76,5 @@ SCRAPE_DEST_FOLDER = os.getenv("SCRAPE_DEST_FOLDER", ".")
 # add slash if not present
 if SCRAPE_DEST_FOLDER[-1] != "/":
     SCRAPE_DEST_FOLDER += "/"
+
+ENABLE_WEB_SCRAPING = False if os.getenv("ENABLE_WEB_SCRAPING") == "False" else True

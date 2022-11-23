@@ -9,13 +9,16 @@ from exec_webstemmer import webstemmer
 from exec_scrapynews import scrapynews
 from compare_results import compare
 
-from constants import FOLDER_NAMES
+from constants import FOLDER_NAMES, ENABLE_WEB_SCRAPING
 
 
 def main():
-    # print("Scraping started")
-    # scrape()
-    # print("Scraping finished\nRoadrunner started\n")
+    # Always run scraping unless the ENABLE_WEB_SCRAPING variable in .env is set to False
+    if ENABLE_WEB_SCRAPING:
+        scrape()
+    else:
+        print("Skipping web scraping")
+
     start = time.time()
     roadrunner()
     rr_end = time.time()
