@@ -22,10 +22,10 @@ def analyse_pages(folder_name):
     print(f"Running roadrunner on folder {folder_name}\n")
 
     command = "java -cp lib/roadrunner.jar:lib/nekohtml.jar:lib/xercesImpl.jar:lib/xmlParserAPIs.jar roadrunner.Shell"
-    # output folder located in 'output/folder_name'
+    # output folder located in 'output/{folder_name}_RR'
     command += f" -N{folder_name}_RR"
     # configuration parameters which will be used
-    command += " -Oexamples/prefs.xml"
+    command += " -Oconfigs/prefs.xml"
 
     pages = glob.glob(f"{SCRAPE_DEST_FOLDER}{folder_name}/{folder_name}/*")
     for page in pages:
