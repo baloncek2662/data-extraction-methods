@@ -1,5 +1,6 @@
 import os
 import subprocess
+import time
 
 from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
 from utils import print_time
@@ -12,7 +13,9 @@ def webstemmer():
     os.chdir("webstemmer/webstemmer")
 
     for folder in FOLDER_NAMES:
+        start = time.time()
         analyse_pages(folder)
+        print(f"Execution time for {folder}: [{time.time() - start}] seconds\n")
 
     os.chdir("../..")
 

@@ -185,8 +185,8 @@ def print_results_len(results_list, articles_cnt, time, method):
     print(f"{method} contents scraped: [{result['contents']}] ({all_contents_percentage * 100:.4}%)")
     print(
         f"{method} scraped [{result}] for a total of "
-        f"[{result['titles'] + result['subtitles'] + result['contents']}] "
-        f"results in [{time}] sec"
+        f"[{result['titles'] + result['subtitles'] + result['contents']}] results. "
+        f"Comparsion method took [{time}] seconds"
     )
 
 

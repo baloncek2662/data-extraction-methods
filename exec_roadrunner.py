@@ -1,6 +1,7 @@
 import subprocess
 import os
 import glob
+import time
 
 from constants import FOLDER_NAMES, SCRAPE_DEST_FOLDER
 from utils import print_time
@@ -13,7 +14,9 @@ def roadrunner():
     os.chdir("roadrunner")
 
     for folder in FOLDER_NAMES:
+        start = time.time()
         analyse_pages(folder)
+        print(f"Execution time for {folder}: [{time.time() - start}] seconds\n")
 
     os.chdir("..")
 

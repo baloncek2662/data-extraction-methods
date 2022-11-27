@@ -1,5 +1,6 @@
 import subprocess
 import os
+import time
 
 from constants import FOLDER_NAMES
 from utils import print_time
@@ -12,7 +13,9 @@ def scrapynews():
     os.chdir("scrapynews")
 
     for folder in FOLDER_NAMES:
+        start = time.time()
         analyse_pages(folder)
+        print(f"Execution time for {folder}: [{time.time() - start}] seconds\n")
 
     os.chdir("..")
 
