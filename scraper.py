@@ -14,8 +14,8 @@ from constants import URL_LISTS, FOLDER_NAMES, SCRAPE_DEST_FOLDER
 def scrape():
     print("===== Scraping started =====\n")
 
-    for i in range(len(URL_LISTS)):
-        write_pages(URL_LISTS[i], FOLDER_NAMES[i])
+    for folder_name in FOLDER_NAMES:
+        write_pages(URL_LISTS[folder_name], folder_name)
 
 
 def write_pages(full_urls, folder_name):

@@ -16,7 +16,7 @@ URLS_24_UR = [
 # zurnal
 URLS_ZURNAL = [
     "https://www.zurnal24.si/sport/",
-    "https://www.zurnal24.si/slovenija/",
+    "https://www.zurnal24.si/pod-streho/",
     "https://www.zurnal24.si/avto/",
     "https://www.zurnal24.si/zdravje/",
     "https://www.zurnal24.si/magazin/",
@@ -50,13 +50,13 @@ URLS_SLOVENSKE_NOVICE = [
 ]
 
 
-URL_LISTS = [
-    URLS_24_UR,
-    URLS_ZURNAL,
-    URLS_DELO,
-    URLS_RTVSLO,
-    URLS_SLOVENSKE_NOVICE,
-]
+URL_LISTS = {
+    "24ur": URLS_24_UR,
+    "zurnal": URLS_ZURNAL,
+    "delo": URLS_DELO,
+    "rtvslo": URLS_RTVSLO,
+    "slovenskenovice": URLS_SLOVENSKE_NOVICE,
+}
 
 
 FOLDER_NAMES = [
@@ -65,7 +65,8 @@ FOLDER_NAMES = [
     "delo",
     "rtvslo",
     "slovenskenovice",
-    # scraping not implemented for below folders!
+    # Scraping not implemented for below folders! Only run program with scraping
+    # enabled if the folders are commented out!
     # "slovenskenovice-delo",
     # "zurnal-24ur",
     # "24ur-zurnal-rtvslo",
