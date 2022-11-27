@@ -7,6 +7,7 @@ from constants import FOLDER_NAMES
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from utils import get_articles_cnt
 
 
 import time
@@ -23,9 +24,11 @@ def compare():
     scrapy_results = get_scrapy_results()
     scrapy_end = time.time()
 
-    print_results_len(roadrunner_results, rr_end - start, "Roadrunner")
-    print_results_len(webstemmer_results, ws_end - rr_end, "Webstemmer")
-    print_results_len(scrapy_results, scrapy_end - ws_end, "Scrapy")
+    articles_cnt = get_articles_cnt()
+
+    print_results_len(roadrunner_results, articles_cnt, rr_end - start, "Roadrunner")
+    print_results_len(webstemmer_results, articles_cnt, ws_end - rr_end, "Webstemmer")
+    print_results_len(scrapy_results, articles_cnt, scrapy_end - ws_end, "Scrapy")
 
     generate_csv(roadrunner_results, "roadrunner")
     generate_csv(webstemmer_results, "webstemmer")
@@ -156,26 +159,34 @@ def get_scrapy_results():
     return result
 
 
-def print_results_len(results_list, time, method):
+def print_results_len(results_list, articles_cnt, time, method):
     result = {"titles": 0, "subtitles": 0, "contents": 0}
     print()
+    print(f"======= {method} =======")
     for result_dict in results_list:
         # there is only webpage, but this is still the easiest option to count it
         for webpage in result_dict:
-            for key in ["titles", "subtitles", "contents"]:
+            for key in ["titles"]:
                 result_key_len = len(result_dict[webpage][key])
+                percentage = round(result_key_len / articles_cnt[webpage] * 100, 2)
                 print(
-                    f"Webpage [{webpage:15s}] scraped [{str(result_key_len).zfill(2)}] [{key:9s}] using {method}"
+                    f"Webpage [{webpage:15s}] scraped [{str(result_key_len).zfill(2)}] [{key:9s}], "
+                    f"accuracy was {percentage}%"
                 )
                 result[key] += result_key_len
 
-    print(f"{method} titles scraped: [{result['titles']}] in [{time}] seconds")
-    print(f"{method} subtitles scraped: [{result['subtitles']}] in [{time}] seconds")
-    print(f"{method} contents scraped: [{result['contents']}] in [{time}] seconds")
+    all_titles_percentage = round(result['titles'] / articles_cnt['all'] * 100, 2)
+    all_subtitles_percentage = round(result['subtitles'] / articles_cnt['all'] * 100, 2)
+    all_contents_percentage = round(result['contents'] / articles_cnt['all'] * 100, 2)
+
+    print(f"Total articles count: [{articles_cnt['all']}]")
+    print(f"{method} titles scraped: [{result['titles']}] ({all_titles_percentage}%)")
+    print(f"{method} subtitles scraped: [{result['subtitles']}] ({all_subtitles_percentage * 100:.4}%)")
+    print(f"{method} contents scraped: [{result['contents']}] ({all_contents_percentage * 100:.4}%)")
     print(
         f"{method} scraped [{result}] for a total of "
         f"[{result['titles'] + result['subtitles'] + result['contents']}] "
-        f"results in [{time}] seconds"
+        f"results in [{time}] sec"
     )
 
 
@@ -190,7 +201,7 @@ def generate_csv(webpages_dict_list, csv_name):
     ]
     """
     Path("./results").mkdir(parents=True, exist_ok=True)
-    for category in ["titles", "subtitles", "contents"]:
+    for category in ["titles"]:
         with open(f"./results/{csv_name}_{category}.csv", "w", newline="") as csvfile:
             csv_writer = csv.writer(csvfile, delimiter=",", quoting=csv.QUOTE_ALL)
             first_row = get_first_csv_row()
