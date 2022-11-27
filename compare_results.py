@@ -46,7 +46,7 @@ def get_roadrunner_results():
     result = []
     for webpage in FOLDER_NAMES:
         # rtv blocks execution due to error with generating wrapper
-        if webpage == "rtvslo":
+        if webpage == "slovenskenovice" or webpage == "rtvslo":
             continue
 
         driver = webdriver.Firefox()
@@ -132,7 +132,7 @@ def get_scrapy_results():
     result = []
     for webpage in FOLDER_NAMES:
         scrapy_json = {}
-        with open(f"./scrapynews/scraped-content/{webpage}_SN.json", "r") as file:
+        with open(f"./scrapynews/results/{webpage}_SN.json", "r") as file:
             scrapy_json = json.load(file)
         # scrapy_json is an array of 5 objects: {'webpage': [...DATA...], 'webpage': [...DATA...], ...}
         # we need to combine them into a single object: {'webpage': [...DATA...]},
@@ -170,8 +170,8 @@ def print_results_len(results_list, articles_cnt, time, method):
                 result_key_len = len(result_dict[webpage][key])
                 percentage = round(result_key_len / articles_cnt[webpage] * 100, 2)
                 print(
-                    f"Webpage [{webpage:15s}] scraped [{str(result_key_len).zfill(2)}] [{key:9s}], "
-                    f"accuracy was {percentage}%"
+                    f"Webpage [{webpage:15s}] scraped [{str(result_key_len).zfill(2)}] [{key:9s}] out of "
+                    f"{articles_cnt[webpage]}, accuracy was {percentage}%"
                 )
                 result[key] += result_key_len
 
