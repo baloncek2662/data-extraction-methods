@@ -3,7 +3,7 @@
 # ./scrapynews/scraped-content/{webpage}.json
 
 import json
-from constants import FOLDER_NAMES
+from constants import FOLDER_NAMES, ROADRUNNER_WRAPPER_FAIL
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -45,8 +45,7 @@ def get_roadrunner_results():
     """
     result = []
     for webpage in FOLDER_NAMES:
-        # rtv blocks execution due to error with generating wrapper
-        if webpage == "slovenskenovice" or webpage == "rtvslo":
+        if webpage in ROADRUNNER_WRAPPER_FAIL:
             continue
 
         driver = webdriver.Firefox()
@@ -69,7 +68,6 @@ def get_roadrunner_results():
         }
 
         result.append({webpage: webpage_results})
-
         driver.close()
 
     return result

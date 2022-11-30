@@ -69,9 +69,14 @@ FOLDER_NAMES = [
     # enabled if the folders are commented out!
     # "slovenskenovice-delo",
     # "zurnal-24ur",
-    # "24ur-zurnal-rtvslo",
+    # "24ur-zurnal-delo",
     # "all_mixed",
 ]
+
+
+# Roadrunner fails to generate a wrapper for the following websites, meaning we must
+# skip their analysis or else the program will crash.
+ROADRUNNER_WRAPPER_FAIL = ["slovenskenovice", "rtvslo", "zurnal-24ur", "24ur-zurnal-delo", "all_mixed"]
 
 
 SCRAPE_DEST_FOLDER = os.getenv("SCRAPE_DEST_FOLDER", ".")
