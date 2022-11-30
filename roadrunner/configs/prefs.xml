@@ -2,7 +2,6 @@
     <backtracking value="false"/>
     <ambiguity value="5"/>
     <occurrences value="1"/>
-    <attributeValues value=""/>
     <LLk value="1"/>
     <RRk value="-1"/>
 </preferences>
